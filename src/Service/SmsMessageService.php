@@ -2,7 +2,7 @@
 
 namespace App\Service;
 
-use App\DTO\SmsMessageDTO;
+use App\DTO\Request\SmsMessageDTO;
 use App\Entity\SmsMessage;
 use App\Entity\User;
 use App\Repository\SmsMessageRepository;

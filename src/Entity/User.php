@@ -44,6 +44,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: SmsMessage::class, mappedBy: 'user')]
     private Collection $smsMessages;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $accessToken = null;
+
     public function __construct()
     {
         $this->smsMessages = new ArrayCollection();
@@ -162,6 +165,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
                 $smsMessage->setUser(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAccessToken(): ?string
+    {
+        return $this->accessToken;
+    }
+
+    public function setAccessToken(?string $accessToken): static
+    {
+        $this->accessToken = $accessToken;
 
         return $this;
     }

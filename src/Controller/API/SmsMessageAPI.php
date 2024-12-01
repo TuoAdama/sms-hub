@@ -2,11 +2,8 @@
 
 namespace App\Controller\API;
 
-use App\DTO\SmsMessageDTO;
-use App\Entity\SmsMessage;
+use App\DTO\Request\SmsMessageDTO;
 use App\Service\SmsMessageService;
-use DateTime;
-use DateTimeImmutable;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;

@@ -1,0 +1,3 @@
+parameters:
+  JWT_ALGORITHM: "%env(JWT_ALGORITHM)%"
+  JWT_SECRET: "%env(JWT_SECRET)%"
