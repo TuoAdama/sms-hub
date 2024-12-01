@@ -2,7 +2,6 @@
 
 namespace App\Service\Security;
 
-use App\Repository\AccessTokenRepository;
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
