@@ -12,7 +12,41 @@
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
-    <body>
-        {% block body %}{% endblock %}
+    <body class="sidebar-mini layout-fixed sidebar-closed sidebar-collapse" style="height: auto;">
+        {% block body %}
+            <div class="wrapper">
+
+                <!-- Navbar -->
+                {% include 'includes/_nav.html.twig' %}
+                <!-- /.navbar -->
+
+                <!-- Main Sidebar Container -->
+                {% include 'includes/_sidebar.html.twig' %}
+
+                <!-- Content Wrapper. Contains page content -->
+                <div class="content-wrapper" style="min-height: 225px;">
+                    <div class="content-header">
+                        <div class="container-fluid">
+                            {% block content_header %}
+
+                            {% endblock %}
+
+                        </div>
+                    </div>
+                    <section class="content">
+                        <div class="container-fluid">
+                            {% block content %}
+
+                            {% endblock %}
+
+                        </div>
+                    </section>
+                </div>
+                <!-- /.content-wrapper -->
+                {% include 'includes/_footer.html.twig' %}
+
+                <div id="sidebar-overlay"></div>
+            </div>
+        {% endblock %}
     </body>
 </html>
