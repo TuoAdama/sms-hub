@@ -4,9 +4,10 @@ namespace App\Entity;
 
 use App\Repository\SmsMessageRepository;
 use Doctrine\ORM\Mapping as ORM;
+use JsonSerializable;
 
 #[ORM\Entity(repositoryClass: SmsMessageRepository::class)]
-class SmsMessage
+class SmsMessage implements JsonSerializable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -92,5 +93,14 @@ class SmsMessage
         $this->user = $user;
 
         return $this;
+    }
+
+
+    public function jsonSerialize(): array {
+        return [
+            'id' => $this->id,
+            'recipient' => $this->recipient,
+            'message' => $this->message,
+        ];
     }
 }
