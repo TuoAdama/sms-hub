@@ -1,0 +1,59 @@
+
+services:
+  web:
+    build:
+      context: ./docker/web/dev
+    depends_on:
+      - db
+    env_file:
+      - .env.local
+    volumes:
+      - ./:/var/www/html/
+      - ~/.composer:/var/composer:cached
+      - ./docker/web/vhost.conf:/etc/apache2/sites-enabled/000-default.conf
+      - ./docker/web/dev/php.ini:/usr/local/etc/php/php.ini
+      - ./docker/web/dev/xdebug.ini:/usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini
+    ports:
+      - "80:80"
+
+  node:
+    image: node:16
+    volumes:
+      - './:/usr/app'
+    restart: on-failure
+    entrypoint: "tail -f /dev/null"
+    working_dir: "/usr/app"
+    ports:
+      - "8083:8083"
+
+  db:
+    image: mysql:8.4.3
+    volumes:
+      - db_data:/var/lib/mysql
+    env_file:
+      - .env.local
+    ports:
+      - "3306:3306"
+
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    ports:
+      - "8080:80"
+    environment:
+      - PMA_ARBITRARY=1
+
+  redis:
+    image: redis:5-alpine
+    ports:
+      - "6379:6379"
+
+  mailer:
+    image: schickling/mailcatcher
+    ports:
+      - "1025:1025"
+      - "1080:1080"
+
+volumes:
+  db_data: {}
+  db_data_test: {}
