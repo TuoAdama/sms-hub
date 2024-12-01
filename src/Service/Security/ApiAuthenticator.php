@@ -3,6 +3,7 @@
 namespace App\Service\Security;
 
 use App\Repository\AccessTokenRepository;
+use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,7 +18,7 @@ class ApiAuthenticator extends AbstractAuthenticator
 {
 
     public function __construct(
-        private readonly AccessTokenRepository $accessTokenRepository,
+        private readonly UserRepository $userRepository,
     )
     {
     }
@@ -31,11 +32,8 @@ class ApiAuthenticator extends AbstractAuthenticator
     {
         $token = str_replace('Bearer ', '', $request->headers->get('Authorization'));
         return new SelfValidatingPassport(new UserBadge($token, function ($identifier) {
-            $accessToken = $this->accessTokenRepository->findOneBy(['token' => $identifier]);
-            if ($accessToken) {
-                return $accessToken->getUser();
-            }
-            return null;
+            $user = $this->userRepository->findOneBy(['accessToken' => $identifier]);
+            return $user ?: null;
         }));
     }
 

@@ -8,6 +8,7 @@ use App\DTO\Request\UserAuthDTO;
 use App\Repository\UserRepository;
 use App\Service\Token\TokenGenerator;
 use DateTimeImmutable;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,7 +20,8 @@ class TokenControllerAPI extends AbstractController
     public function __construct(
         private readonly UserRepository $userRepository,
         private readonly UserPasswordHasherInterface $passwordHasher,
-        private readonly TokenGenerator $tokenGenerator
+        private readonly TokenGenerator $tokenGenerator,
+        private readonly EntityManagerInterface $entityManager,
     )
     {
     }
@@ -40,6 +42,11 @@ class TokenControllerAPI extends AbstractController
             $userAuth->username,
             $iat,
         )->generate();
+
+        $user->setAccessToken($token);
+
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
 
         return new JsonResponse([
             'token' => $token,
