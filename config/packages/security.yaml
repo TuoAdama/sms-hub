@@ -16,7 +16,7 @@ security:
         api:
             pattern: ^/api/messages/
             custom_authenticators:
-                - App\Services\Security\ApiAuthenticator
+                - App\Service\Security\ApiAuthenticator
             stateless: true
             lazy: true
         main:

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Services\Security;
+namespace App\Service\Security;
 
 use App\Repository\AccessTokenRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
