@@ -2,10 +2,13 @@
 
 namespace App\Controller\API;
 
+use App\DTO\SmsMessageDTO;
+use App\Entity\SmsMessage;
 use App\Service\SmsMessageService;
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route('/api/messages')]
@@ -24,5 +27,12 @@ class SmsMessageAPI extends AbstractController
     public function getUnsentMessages(): JsonResponse
     {
         return $this->json($this->smsMessageService->getAllUnsentSmsMessages());
+    }
+
+    #[Route('/store', methods: ['POST'])]
+    public function store(#[MapRequestPayload] SmsMessageDTO $message): JsonResponse
+    {
+        $user = $this->getUser();
+        dd($user, $message);
     }
 }
