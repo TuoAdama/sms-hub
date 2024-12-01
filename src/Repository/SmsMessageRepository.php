@@ -40,7 +40,7 @@ class SmsMessageRepository extends ServiceEntityRepository
     private function updateAllUnsentSmsMessages(): void
     {
         $this->createQueryBuilder('s')
-            ->update("App:SmsMessage", 's')
+            ->update("App\Entity\SmsMessage", 's')
             ->set('s.sent', ':sent')
             ->where('s.sent = false')
             ->setParameter('sent', true)
