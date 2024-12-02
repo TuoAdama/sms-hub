@@ -1,0 +1,15 @@
+account:
+  already.register: J'ai déjà un compte
+  create: Création de compte
+
+firstname: Prénom
+form.lastname: Votre nom
+password: Mot de passe
+c_password: Confirmer mot de passe
+
+btn.register: Enregistrer
+form:
+  register:
+    title: Création de compte
+  login:
+    title: Connexion
