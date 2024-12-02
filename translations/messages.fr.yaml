@@ -1,6 +1,7 @@
 account:
   already.register: J'ai déjà un compte
   create: Création de compte
+  connexion: Connexion
 
 firstname: Prénom
 form.lastname: Votre nom

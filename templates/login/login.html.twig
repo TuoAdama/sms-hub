@@ -1,19 +1,16 @@
 {% extends "base_auth.html.twig" %}
 
-{% block content %}
-    <p class="login-box-msg">{{ "account.create"|trans }}</p>
+{% block title %}
+    Connexion
+{% endblock %}
 
-    <form method="post">
-        <div class="input-group mb-3">
-            <input type="text" class="form-control" placeholder="{{ 'form.lastname'|trans }}">
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-user"></span>
-                </div>
-            </div>
-        </div>
-        <div class="input-group mb-3">
-            <input type="email" class="form-control" placeholder="Email">
+
+{% block content %}
+    <p class="login-box-msg">{{ "account.connexion"|trans }}</p>
+
+    <form action="{{ path('app_login') }}">
+     <div class="input-group mb-3">
+            <input class="form-control" placeholder="Email"  type="text" id="username" name="_username" value="{{ last_username }}" required>
             <div class="input-group-append">
                 <div class="input-group-text">
                     <span class="fas fa-envelope"></span>
@@ -21,15 +18,7 @@
             </div>
         </div>
         <div class="input-group mb-3">
-            <input type="password" class="form-control" placeholder="{{ 'password'|trans }}">
-            <div class="input-group-append">
-                <div class="input-group-text">
-                    <span class="fas fa-lock"></span>
-                </div>
-            </div>
-        </div>
-        <div class="input-group mb-3">
-            <input type="password" class="form-control" placeholder="{{ 'c_password'|trans }}">
+            <input class="form-control" placeholder="{{ "password"|trans }}" type="password" id="password" name="_password" required>
             <div class="input-group-append">
                 <div class="input-group-text">
                     <span class="fas fa-lock"></span>
@@ -37,11 +26,9 @@
             </div>
         </div>
         <div class="row">
-            <!-- /.col -->
             <div class="col-6 my-3">
-                <button type="submit" class="btn btn-primary btn-block">{{ 'btn.register'|trans }}</button>
+                <button type="submit" class="btn btn-primary btn-block">{{ 'form.login.title'|trans }}</button>
             </div>
-            <!-- /.col -->
         </div>
     </form>
 
