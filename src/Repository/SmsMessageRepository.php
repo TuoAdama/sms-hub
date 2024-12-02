@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\SmsMessage;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\Query;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -46,5 +47,11 @@ class SmsMessageRepository extends ServiceEntityRepository
             ->setParameter('sent', true)
             ->getQuery()
             ->execute();
+    }
+
+    public function paginate(): Query
+    {
+        return $this->createQueryBuilder('s')
+            ->getQuery();
     }
 }
