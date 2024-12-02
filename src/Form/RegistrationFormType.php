@@ -21,6 +21,9 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'label' => false,
+                'row_attr' => [
+                    'class' => 'd-flex w-100'
+                ],
                 'attr' => [
                     'class' => 'form-control',
                     "placeholder" => "Email"
@@ -28,6 +31,9 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('name', TextType::class, [
                 'label' => false,
+                'row_attr' => [
+                    'class' => 'd-flex w-100'
+                ],
                 'attr' => [
                     'class' => 'form-control',
                     "placeholder" => "form.lastname"
@@ -44,6 +50,9 @@ class RegistrationFormType extends AbstractType
                 ],
                 'first_options'  => [
                     'label' => false,
+                    'row_attr' => [
+                        'class' => 'd-flex w-100'
+                    ],
                     'attr' => [
                         'class' => 'form-control',
                         "placeholder" => "password"
@@ -51,6 +60,9 @@ class RegistrationFormType extends AbstractType
                 ],
                 'second_options' => [
                     'label' => false,
+                    'row_attr' => [
+                        'class' => 'd-flex w-100'
+                    ],
                     'attr' => [
                         'class' => 'form-control',
                         "placeholder" => "c_password"

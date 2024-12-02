@@ -5,7 +5,7 @@
 {% block content %}
 
     {{ form_start(registrationForm) }}
-            <div class="input-group mb-3">
+            <div class="input-group mb-3 flex-nowrap">
                 {{ form_row(registrationForm.name) }}
                 <div class="input-group-append">
                     <div class="input-group-text">
@@ -13,7 +13,7 @@
                     </div>
                 </div>
             </div>
-            <div class="input-group mb-3">
+            <div class="input-group mb-3 flex-nowrap">
                 {{ form_row(registrationForm.email) }}
                 <div class="input-group-append">
                     <div class="input-group-text">
@@ -21,7 +21,7 @@
                     </div>
                 </div>
             </div>
-            <div class="input-group mb-3">
+            <div class="input-group mb-3 flex-nowrap">
                 {{ form_row(registrationForm.password.first) }}
                 <div class="input-group-append">
                     <div class="input-group-text">
@@ -29,7 +29,7 @@
                     </div>
                 </div>
             </div>
-            <div class="input-group mb-3">
+            <div class="input-group mb-3 flex-nowrap">
                 {{ form_row(registrationForm.password.second) }}
                 <div class="input-group-append">
                     <div class="input-group-text">
