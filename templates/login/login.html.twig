@@ -6,8 +6,12 @@
 
 
 {% block content %}
-    <p class="login-box-msg">{{ "account.connexion"|trans }}</p>
 
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    <p class="login-box-msg">{{ "account.connexion"|trans }}</p>
     <form action="{{ path('app_login') }}" method="post">
      <div class="input-group mb-3">
             <input class="form-control" placeholder="Email"  type="text" id="username" name="_username" value="{{ last_username }}" required>
