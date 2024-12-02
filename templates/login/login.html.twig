@@ -1,0 +1,39 @@
+{% extends "base_auth.html.twig" %}
+
+{% block title %}
+    Connexion
+{% endblock %}
+
+
+{% block content %}
+
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    <p class="login-box-msg">{{ "account.connexion"|trans }}</p>
+    <form action="{{ path('app_login') }}" method="post">
+     <div class="input-group mb-3">
+            <input class="form-control" placeholder="Email"  type="text" id="username" name="_username" value="{{ last_username }}" required>
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-envelope"></span>
+                </div>
+            </div>
+        </div>
+        <div class="input-group mb-3">
+            <input class="form-control" placeholder="{{ "password"|trans }}" type="password" id="password" name="_password" required>
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-lock"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-6 my-3">
+                <button type="submit" class="btn btn-primary btn-block">{{ 'form.login.title'|trans }}</button>
+            </div>
+        </div>
+    </form>
+{% endblock %}
+

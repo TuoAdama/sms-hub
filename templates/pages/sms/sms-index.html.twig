@@ -1,0 +1,66 @@
+{% extends "base.html.twig" %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}}
+{% endblock %}
+
+{% block content_header %}
+    <div>
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">SMS</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="/">Accueil</a></li>
+                    <li class="breadcrumb-item active">Sms</li>
+                </ol>
+            </div><!-- /.col -->
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block content %}
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Liste des messages</h3>
+                </div>
+                <!-- /.card-header -->
+                <div class="card-body table-responsive p-0">
+                    <table class="table table-hover text-nowrap">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Recepteur</th>
+                            <th>Message</th>
+                            <th>Status</th>
+                            <th>Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in sms %}
+                            <tr>
+                                <td>{{ item.id }}</td>
+                                <td>{{ item.recipient }}</td>
+                                <td>{{ item.message }}</td>
+                                <td>{{ item.sent }}</td>
+                                <td>{{ item.createdAt|date('Y-m-d H:i') }}</td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-12">
+            <div class="navigation mt-2">
+                {{ knp_pagination_render(sms) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+

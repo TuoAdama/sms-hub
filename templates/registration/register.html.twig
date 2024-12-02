@@ -1,23 +1,47 @@
-{% extends 'base.html.twig' %}
+{% extends 'base_auth.html.twig' %}
 
-{% block title %}Register{% endblock %}
+{% block title %}{{ "form.register.title"|trans }}{% endblock %}
 
-{% block body %}
-    {% for flash_error in app.flashes('verify_email_error') %}
-        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
-
-    <h1>Register</h1>
-
-    {{ form_errors(registrationForm) }}
+{% block content %}
 
     {{ form_start(registrationForm) }}
-        {{ form_row(registrationForm.email) }}
-        {{ form_row(registrationForm.plainPassword, {
-            label: 'Password'
-        }) }}
-        {{ form_row(registrationForm.agreeTerms) }}
-
-        <button type="submit" class="btn">Register</button>
+            <div class="input-group mb-3 flex-nowrap">
+                {{ form_row(registrationForm.name) }}
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-user"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group mb-3 flex-nowrap">
+                {{ form_row(registrationForm.email) }}
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-envelope"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group mb-3 flex-nowrap">
+                {{ form_row(registrationForm.password.first) }}
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-lock"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="input-group mb-3 flex-nowrap">
+                {{ form_row(registrationForm.password.second) }}
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <span class="fas fa-lock"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 my-3">
+                    <button type="submit" class="btn btn-primary btn-block">{{ 'btn.register'|trans }}</button>
+                </div>
+            </div>
+    <a href="{{ path('app_register') }}" class="text-center">{{ 'account.already.register'|trans }}</a>
     {{ form_end(registrationForm) }}
 {% endblock %}
