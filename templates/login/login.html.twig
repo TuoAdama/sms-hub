@@ -1,0 +1,50 @@
+{% extends "base_auth.html.twig" %}
+
+{% block content %}
+    <p class="login-box-msg">{{ "account.create"|trans }}</p>
+
+    <form method="post">
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="{{ 'form.lastname'|trans }}">
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-user"></span>
+                </div>
+            </div>
+        </div>
+        <div class="input-group mb-3">
+            <input type="email" class="form-control" placeholder="Email">
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-envelope"></span>
+                </div>
+            </div>
+        </div>
+        <div class="input-group mb-3">
+            <input type="password" class="form-control" placeholder="{{ 'password'|trans }}">
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-lock"></span>
+                </div>
+            </div>
+        </div>
+        <div class="input-group mb-3">
+            <input type="password" class="form-control" placeholder="{{ 'c_password'|trans }}">
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-lock"></span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <!-- /.col -->
+            <div class="col-6 my-3">
+                <button type="submit" class="btn btn-primary btn-block">{{ 'btn.register'|trans }}</button>
+            </div>
+            <!-- /.col -->
+        </div>
+    </form>
+
+    <a href="{{ path('app_register') }}" class="text-center">{{ 'account.already.register'|trans }}</a>
+{% endblock %}
+

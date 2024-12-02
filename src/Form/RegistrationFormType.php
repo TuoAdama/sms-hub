@@ -4,7 +4,6 @@ namespace App\Form;
 
 use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -22,9 +21,6 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'label' => false,
-                'constraints' => [
-                    new Email()
-                ],
                 'attr' => [
                     'class' => 'form-control',
                     "placeholder" => "Email"
@@ -32,13 +28,13 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('name', TextType::class, [
                 'label' => false,
-                'required' => true,
                 'attr' => [
                     'class' => 'form-control',
                     "placeholder" => "form.lastname"
                 ]
             ])
             ->add('password', RepeatedType::class, [
+                'type' => PasswordType::class,
                 'required' => true,
                 'mapped' => false,
                 'attr' => [
