@@ -13,6 +13,6 @@ class HomeController extends AbstractController
     #[Route('/')]
     public function index(): Response
     {
-        return $this->render('index.html.twig');
+        return $this->redirectToRoute('app_sms_index');
     }
 }
