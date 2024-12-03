@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\SmsMessage;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\Query;
@@ -47,6 +48,14 @@ class SmsMessageRepository extends ServiceEntityRepository
             ->setParameter('sent', true)
             ->getQuery()
             ->execute();
+    }
+
+    public function findByUser(User $user): Query
+    {
+        return $this->createQueryBuilder('sms')
+            ->andWhere('sms.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery();
     }
 
     public function paginate(): Query
