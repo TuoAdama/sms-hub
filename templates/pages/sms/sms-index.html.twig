@@ -23,6 +23,42 @@
 
 {% block content %}
     <div class="row">
+        <div class="col-12" id="accordion">
+            <div class="card card-primary card-outline">
+                <a class="d-block w-100">
+                    <div class="card-header">
+                        <h4 class="card-title w-100">
+                           Token
+                        </h4>
+                    </div>
+                </a>
+                <div data-parent="#accordion" style="">
+                    <div class="card-body">
+                        {% for message in app.flashes('success') %}
+                            <div class="alert alert-success">{{ message }}</div>
+                        {% endfor %}
+                        <div class="my-3">
+                            <a href="{{ path('app_user_generate_token') }}" class="btn btn-primary">
+                                {{ "btn.generate_token"|trans }}
+                            </a>
+                        </div>
+                        {% if app.user.accessToken %}
+                            <div class="input-group mb-3 flex-nowrap">
+                                <input value="{{ app.user.accessToken }}" readonly type="text" class="form-control" />
+                                <div class="input-group-append">
+                                    <div class="input-group-text">
+                                        <span class="fas fa-eye"></span>
+                                        <span class="d-none fas fa-eye-slash pointer-event"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
