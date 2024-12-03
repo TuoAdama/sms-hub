@@ -42,18 +42,9 @@
                                 {{ "btn.generate_token"|trans }}
                             </a>
                         </div>
+
                         {% if app.user.accessToken %}
-                            <div class="input-group mb-3 flex-nowrap">
-                                <input value="{{ app.user.accessToken }}" readonly type="text" class="form-control" />
-                                <div class="input-group-append">
-                                    <div class="input-group-text">
-                                        <span class="fas fa-eye"></span>
-                                        <span class="d-none fas fa-eye-slash pointer-event"></span>
-                                        <span class="d-none fas fa-eye-slash pointer-event"></span>
-                                    </div>
-                                </div>
-                                <a href="" class="btn btn-success ml-3">{{ "btn.copy"|trans }}</a>
-                            </div>
+                            <div {{ vue_component('TokenGenerator', {token: app.user.accessToken}) }}></div>
                         {% endif %}
                     </div>
                 </div>
