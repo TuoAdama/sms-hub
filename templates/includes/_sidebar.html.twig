@@ -15,17 +15,28 @@
                                     </p>
                                 </a>
                             </li>
-                            <li class="nav-item">
-                                <a href="{{ path('app_sms_index') }}" class="nav-link">
-                                    <i class="nav-icon far fa-envelope"></i>
-                                    <p>
-                                        Messages
-                                    </p>
-                                </a>
-                            </li>
+                            {% if is_granted("ROLE_ADMIN") %}
+                                <li class="nav-item">
+                                    <a href="{{ path('app_admin_sms_index') }}" class="nav-link">
+                                        <i class="nav-icon fas fa-table"></i>
+                                        <p>
+                                            Messages
+                                        </p>
+                                    </a>
+                                </li>
+                            {% else %}
+                                <li class="nav-item">
+                                    <a href="{{ path('sms_index') }}" class="nav-link">
+                                        <i class="nav-icon far fa-envelope"></i>
+                                        <p>
+                                            Messages
+                                        </p>
+                                    </a>
+                                </li>
+                            {% endif %}
                             <li class="nav-item">
                                 <a href="/logout" class="nav-link">
-                                    <i class="nav-icon far fa-arrow-left"></i>
+                                    <i class="nav-icon far fa-circle text-danger"></i>
                                     <p>
                                         {{ "logout"|trans }}
                                     </p>

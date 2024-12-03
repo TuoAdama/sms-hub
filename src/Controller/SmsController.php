@@ -1,32 +1,36 @@
 <?php
 
-namespace App\Controller\Admin;
+declare(strict_types=1);
 
+namespace App\Controller;
+
+use App\Entity\User;
 use App\Repository\SmsMessageRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('/admin/sms')]
-#[IsGranted('ROLE_ADMIN')]
-class SmsAdminController extends AbstractController
+#[IsGranted("IS_AUTHENTICATED_FULLY")]
+#[Route('/sms')]
+class SmsController extends AbstractController
 {
 
     public function __construct(
         private readonly SmsMessageRepository $smsMessageRepository,
-        private readonly PaginatorInterface $paginator,
+        private readonly PaginatorInterface $paginator
     )
     {
     }
 
-    #[Route('/', name: 'app_admin_sms_index')]
-    public function index(Request $request): Response {
-
+    #[Route('/', name: 'sms_index')]
+    public function index(#[CurrentUser] User $user, Request $request): Response
+    {
         $sms = $this->paginator->paginate(
-            $this->smsMessageRepository->paginate(),
+            $this->smsMessageRepository->findByUser($user),
             $request->query->getInt('page', 1),
             10,
         );
