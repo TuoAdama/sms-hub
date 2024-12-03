@@ -3,9 +3,7 @@
     <input autocomplete="off" :value='token' readonly :type="hideToken ? 'password': 'text'" class="form-control" />
     <div class="input-group-append">
       <div class="input-group-text">
-        <span @click="hideToken = false" class="fas fa-eye" v-if="hideToken"></span>
-        <span @click="hideToken = true" class="fas fa-eye-slash" v-if="!hideToken"></span>
-        <span class="d-none fas fa-eye-slash pointer-event"></span>
+        <span @click="hideToken = !hideToken" :class="{'fas fa-eye': hideToken, 'fas fa-eye-slash': !hideToken}"></span>
       </div>
     </div>
     <button id="copy-btn" @click="copyToken" class="btn btn-success ml-3">copier</button>
