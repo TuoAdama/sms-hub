@@ -28,8 +28,6 @@ class TokenControllerAPI extends AbstractController
     )
     {
     }
-
-    #[IsGranted("IS_AUTHENTICATED_FULLY")]
     #[Route('/token/generate', name: 'generate_token', methods: ['POST'])]
     public function generate(#[MapRequestPayload] UserAuthDTO $userAuth): JsonResponse
     {
