@@ -8,10 +8,18 @@ form.lastname: Votre nom
 password: Mot de passe
 c_password: Confirmer mot de passe
 
-btn.register: Enregistrer
+btn:
+  register: Enregistrer
+  generate_token: Générer un token
+  copy: copier
+
+
+
 form:
   register:
     title: Création de compte
   login:
     title: Connexion
 logout: Déconnexion
+success:
+  message: Opération effectuée avec succès
