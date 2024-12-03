@@ -11,6 +11,7 @@ c_password: Confirmer mot de passe
 btn:
   register: Enregistrer
   generate_token: Générer un token
+  copy: copier
 
 
 
