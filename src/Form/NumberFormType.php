@@ -15,15 +15,15 @@ class NumberFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('country', ChoiceType::class, [
+            ->add('countryCode', ChoiceType::class, [
                 'label' => false,
-                'choices' => ["France" => 'france'],
+                'choices' => ["France" => '33'],
                 'row_attr' => ['class' => 'w-100'],
                 'attr' => [
                     'class' => 'form-control col-12',
                 ],
                 'constraints' => [
-                    new Choice(['choices' => ["france"]]),
+                    new Choice(['choices' => ["33"]]),
                 ]
             ])
             ->add('number', TextType::class, [
