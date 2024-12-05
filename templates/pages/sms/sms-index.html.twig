@@ -38,7 +38,7 @@
                             <div class="alert alert-success">{{ message }}</div>
                         {% endfor %}
                         <div class="my-3">
-                            <a href="{{ path('app_user_generate_token') }}" class="btn btn-primary">
+                            <a aria-disabled="true" href="{{ path('app_user_generate_token') }}" class="{{ app.user.number ?: "disabled"}} btn btn-primary">
                                 {{ "btn.generate_token"|trans }}
                             </a>
                         </div>
