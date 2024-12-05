@@ -12,6 +12,8 @@ btn:
   register: Enregistrer
   generate_token: Générer un token
   copy: copier
+  number:
+    register: Ajouter un numéro de téléphone
 
 
 
@@ -24,3 +26,6 @@ logout: Déconnexion
 success:
   message: Opération effectuée avec succès
 number: Numéro de téléphone
+
+token:
+  warning: Pour créer un token, vous devez ajouter un token.
