@@ -23,3 +23,4 @@ form:
 logout: Déconnexion
 success:
   message: Opération effectuée avec succès
+number: Numéro de téléphone
