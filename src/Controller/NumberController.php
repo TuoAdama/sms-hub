@@ -42,7 +42,6 @@ class NumberController extends AbstractController
             $number = $form->get('number')->getData();
             $user->setNumber("+".$countryCode.$number);
             $this->handleNumberVerification($user);
-            $this->entityManager->flush();
             return $this->redirectToRoute('home');
         }
         return $this->render('pages/number/number_register.html.twig', [
