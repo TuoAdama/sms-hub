@@ -53,6 +53,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $number = null;
 
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    private ?NumberVerification $numberVerification = null;
+
     public function __construct()
     {
         $this->smsMessages = new ArrayCollection();
@@ -207,6 +210,23 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setNumber(string $number): static
     {
         $this->number = $number;
+
+        return $this;
+    }
+
+    public function getNumberVerification(): ?NumberVerification
+    {
+        return $this->numberVerification;
+    }
+
+    public function setNumberVerification(NumberVerification $numberVerification): static
+    {
+        // set the owning side of the relation if necessary
+        if ($numberVerification->getUser() !== $this) {
+            $numberVerification->setUser($this);
+        }
+
+        $this->numberVerification = $numberVerification;
 
         return $this;
     }
