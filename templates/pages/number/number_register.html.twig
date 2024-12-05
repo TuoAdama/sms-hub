@@ -7,31 +7,29 @@
                 <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
             {% endfor %}
             <div class="card-body">
-                <form action="{{ path('app_login') }}" method="post">
-                    <div class="input-group mb-3">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                <span class="fas fa-flag"></span>
-                            </div>
-                        </div>
-                        <select name="country" id="country" class="form-control">
-                            <option value="france">France</option>
-                        </select>
-                    </div>
-                    <div class="input-group mb-3">
-                        <div class="input-group-append">
-                            <div class="input-group-text">
-                                +33
-                            </div>
-                        </div>
-                        <input class="form-control" placeholder="{{ "number"|trans }}" type="number" id="number" name="number" required>
-                    </div>
-                    <div class="row">
-                        <div class="col-12 my-3">
-                            <button type="submit" class="btn btn-primary btn-block">{{ 'btn.register'|trans }}</button>
+                {{ form_start(form) }}
+                <div class="input-group mb-3 flex-nowrap">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-flag"></span>
                         </div>
                     </div>
-                </form>
+                    {{ form_row(form.country) }}
+                </div>
+                <div class="input-group mb-3 flex-nowrap">
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            +33
+                        </div>
+                    </div>
+                    {{ form_row(form.number) }}
+                </div>
+                <div class="row">
+                    <div class="col-12 my-3">
+                        <button type="submit" class="btn btn-primary btn-block">{{ 'btn.register'|trans }}</button>
+                    </div>
+                </div>
+                {{ form_end(form) }}
             </div>
         </div>
     </div>
