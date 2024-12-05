@@ -56,6 +56,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     private ?NumberVerification $numberVerification = null;
 
+    #[ORM\Column]
+    private ?bool $isNumberVerified = false;
+
     public function __construct()
     {
         $this->smsMessages = new ArrayCollection();
@@ -227,6 +230,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         }
 
         $this->numberVerification = $numberVerification;
+
+        return $this;
+    }
+
+    public function isNumberVerified(): ?bool
+    {
+        return $this->isNumberVerified;
+    }
+
+    public function setNumberVerified(bool $isNumberVerified): static
+    {
+        $this->isNumberVerified = $isNumberVerified;
 
         return $this;
     }

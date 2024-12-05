@@ -11,10 +11,12 @@ use App\Form\NumberFormType;
 use App\Repository\SmsMessageRepository;
 use App\Repository\UserRepository;
 use App\Service\SmsMessageService;
+use App\Service\Token\TokenGenerator;
 use App\Service\Token\TokenService;
 use Doctrine\ORM\EntityManagerInterface;
 use Exception;
 use Random\RandomException;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,6 +34,7 @@ class NumberController extends AbstractController
         private readonly UserRepository $userRepository,
         private readonly string $adminEmail,
         private readonly SmsMessageService $smsMessageService,
+        private readonly TokenGenerator $tokenGenerator,
         private readonly TranslatorInterface $translator,
     )
     {
@@ -56,6 +59,33 @@ class NumberController extends AbstractController
         return $this->render('pages/number/number_register.html.twig', [
             'form' => $form,
         ]);
+    }
+
+    #[isGranted("IS_AUTHENTICATED_FULLY")]
+    #[Route('/number/verify/{token}', name: "app_number_verify")]
+    public function validateNumber(
+        #[MapEntity(mapping: ['token' => 'token'])]
+        NumberVerification $numberVerification,
+        #[CurrentUser] User $user,
+    )
+    {
+        if ($numberVerification->getUser()->getId() !== $this->getUser()->getId()) {
+            throw $this->createNotFoundException();
+        }
+
+        $payload = $this->tokenGenerator->decode($numberVerification->getToken())['payload'];
+        $expiredDate = $payload['iat'];
+        if ($expiredDate > time()) {
+            throw $this->createNotFoundException();
+        }
+
+        $user->setNumberVerified(true);
+        $this->entityManager->flush();
+
+
+        $this->entityManager->remove($numberVerification);
+        $this->entityManager->flush();
+
     }
 
 
