@@ -29,3 +29,8 @@ number: Numéro de téléphone
 
 token:
   warning: Pour créer un token, vous devez ajouter un token.
+
+
+verification:
+  number:
+    message: "Votre code de vérification est: "
