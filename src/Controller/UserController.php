@@ -32,6 +32,6 @@ class UserController extends AbstractController
         $user->setAccessToken($this->tokenService->generate($user));
         $this->addFlash('success', $this->translator->trans('success.message'));
         $this->entityManager->flush();
-        return $this->redirectToRoute('app_sms_index');
+        return $this->redirectToRoute('home');
     }
 }
