@@ -67,5 +67,6 @@ class NumberController extends AbstractController
             ->setTemporalCode(random_int(1000, 9999));
 
         $this->entityManager->persist($verification);
+        $this->entityManager->flush();
     }
 }
