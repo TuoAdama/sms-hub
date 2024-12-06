@@ -6,9 +6,11 @@ namespace App\Controller;
 
 use App\Entity\NumberVerification;
 use App\Entity\User;
+use App\Form\CodeVerificationType;
 use App\Form\NumberFormType;
 use App\Service\NumberVerificationService;
 use App\Service\Token\TokenGenerator;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Random\RandomException;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
@@ -18,13 +20,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class NumberController extends AbstractController
 {
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
-        private readonly TokenGenerator $tokenGenerator,
-        private readonly NumberVerificationService $numberVerificationService,
+        private readonly EntityManagerInterface    $entityManager,
+        private readonly TokenGenerator            $tokenGenerator,
+        private readonly NumberVerificationService $numberVerificationService, private readonly TranslatorInterface $translator,
     )
     {
     }
@@ -46,7 +49,7 @@ class NumberController extends AbstractController
 
             $this->numberVerificationService->handleNumberVerification($user);
 
-            return $this->render('pages/number/code_verification.html.twig', [
+            return $this->redirectToRoute('app_number_verify', [
                 'token' => $user->getNumberToken(),
             ]);
         }
@@ -57,31 +60,53 @@ class NumberController extends AbstractController
     }
 
 
+
     #[isGranted("IS_AUTHENTICATED_FULLY")]
     #[Route('/number/verify/{token}', name: "app_number_verify")]
     public function validateNumber(
-        #[MapEntity(mapping: ['token' => 'token'])]
-        User $user,
+        Request $request,
+        string $token,
     ): Response
     {
-        /** @var User $authUser */
-        $authUser = $this->getUser();
 
-        if ($user->getId() !== $authUser->getId()) {
-            throw $this->createNotFoundException();
+        $form = $this->createForm(CodeVerificationType::class, [
+            'action' => $this->generateUrl('app_number_verify', ['token' => $token])
+            ]
+        );
+
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var User $authUser */
+            $authUser = $this->getUser();
+
+            if ($authUser->getNumberToken() !== $token) {
+                throw $this->createNotFoundException();
+            }
+
+            $payload = $this->tokenGenerator->decode($authUser->getNumberToken())['payload'];
+            $expiredDate = $payload['iat'];
+            if ($expiredDate < time()) {
+                throw $this->createNotFoundException();
+            }
+
+            $code = $form->get('code')->getData();
+            if (intval($code) !== $authUser->getNumberTemporalCode()){
+                $this->addFlash('errors', $this->translator->trans("verification.number.invalid.message"));
+                return $this->redirectToRoute('app_number_verify', ['token' => $token]);
+            }
+
+            $authUser->setNumberVerified(true)
+                ->setNumberToken(null)
+                ->setNumberTemporalCode(null);
+
+            $this->entityManager->flush();
+
+            return $this->redirectToRoute('home');
         }
 
-        $payload = $this->tokenGenerator->decode($user->getNumberToken())['payload'];
-        $expiredDate = $payload['iat'];
-        if ($expiredDate > time()) {
-            throw $this->createNotFoundException();
-        }
-        $user->setNumberVerified(true)
-              ->setNumberToken(null)
-              ->setNumberTemporalCode(null);
-
-        $this->entityManager->flush();
-
-        return $this->redirectToRoute('home');
+        return $this->render('pages/number/code_verification.html.twig', [
+            'form' => $form
+        ]);
     }
 }

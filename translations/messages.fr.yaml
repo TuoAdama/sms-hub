@@ -35,3 +35,5 @@ token:
 verification:
   number:
     message: "Votre code de vérification est: "
+    invalid:
+      message: Code incorrect
