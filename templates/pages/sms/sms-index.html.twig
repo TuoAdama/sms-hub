@@ -22,7 +22,7 @@
 
 
 {% block content %}
-    {% if not app.user.number %}
+    {% if not app.user.numberVerified %}
         <div class="row">
             <div class="alert alert-warning col-12">
                 {{ "token.warning"|trans }}

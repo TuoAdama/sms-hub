@@ -1,0 +1,27 @@
+{% extends "base.html.twig" %}
+
+{% block content %}
+    <div class="register-box border border-secondary mx-auto">
+        <div class="card card-outline card-secondary mx-auto mh-100">
+            <form action="{{path('app_number_verify', {token: token})}}" method="POST">
+                {% for flash_error in app.flashes('verify_email_error') %}
+                    <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+                {% endfor %}
+                <div class="card-header">
+                    <h4>Entrez le code de vérification</h4>
+                </div>
+                <div class="card-body">
+                    <input type="hidden" name="_token" value="{{ csrf_token('number_verification') }}" />
+                    <div class="input-group mb-3 flex-nowrap">
+                        <input class="form-control" type="number" name="code">
+                    </div>
+                    <div class="row">
+                        <div class="col-12 my-3">
+                            <button type="submit" class="btn btn-primary btn-block">{{ 'btn.register'|trans }}</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

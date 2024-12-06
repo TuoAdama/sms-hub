@@ -39,37 +39,49 @@ class NumberController extends AbstractController
         $form = $this->createForm(NumberFormType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+
             $countryCode = $form->get('countryCode')->getData();
             $number = $form->get('number')->getData();
             $user->setNumber("+".$countryCode.$number);
+
             $this->numberVerificationService->handleNumberVerification($user);
-            return $this->redirectToRoute('home');
+
+            return $this->render('pages/number/code_verification.html.twig', [
+                'token' => $user->getNumberToken(),
+            ]);
         }
+
         return $this->render('pages/number/number_register.html.twig', [
             'form' => $form,
         ]);
     }
 
+
     #[isGranted("IS_AUTHENTICATED_FULLY")]
     #[Route('/number/verify/{token}', name: "app_number_verify")]
     public function validateNumber(
         #[MapEntity(mapping: ['token' => 'token'])]
-        NumberVerification $numberVerification,
-        #[CurrentUser] User $user,
+        User $user,
     ): Response
     {
-        if ($numberVerification->getUser()->getId() !== $this->getUser()->getId()) {
+        /** @var User $authUser */
+        $authUser = $this->getUser();
+
+        if ($user->getId() !== $authUser->getId()) {
             throw $this->createNotFoundException();
         }
 
-        $payload = $this->tokenGenerator->decode($numberVerification->getToken())['payload'];
+        $payload = $this->tokenGenerator->decode($user->getNumberToken())['payload'];
         $expiredDate = $payload['iat'];
         if ($expiredDate > time()) {
             throw $this->createNotFoundException();
         }
-        $this->entityManager->remove($numberVerification);
-        $user->setNumberVerified(true);
+        $user->setNumberVerified(true)
+              ->setNumberToken(null)
+              ->setNumberTemporalCode(null);
+
         $this->entityManager->flush();
+
         return $this->redirectToRoute('home');
     }
 }

@@ -53,11 +53,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $number = null;
 
-    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
-    private ?NumberVerification $numberVerification = null;
-
     #[ORM\Column]
     private ?bool $isNumberVerified = false;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $numberToken = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $numberTemporalCode = null;
 
     public function __construct()
     {
@@ -217,23 +220,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getNumberVerification(): ?NumberVerification
-    {
-        return $this->numberVerification;
-    }
-
-    public function setNumberVerification(NumberVerification $numberVerification): static
-    {
-        // set the owning side of the relation if necessary
-        if ($numberVerification->getUser() !== $this) {
-            $numberVerification->setUser($this);
-        }
-
-        $this->numberVerification = $numberVerification;
-
-        return $this;
-    }
-
     public function isNumberVerified(): ?bool
     {
         return $this->isNumberVerified;
@@ -242,6 +228,30 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setNumberVerified(bool $isNumberVerified): static
     {
         $this->isNumberVerified = $isNumberVerified;
+
+        return $this;
+    }
+
+    public function getNumberToken(): ?string
+    {
+        return $this->numberToken;
+    }
+
+    public function setNumberToken(?string $numberToken): static
+    {
+        $this->numberToken = $numberToken;
+
+        return $this;
+    }
+
+    public function getNumberTemporalCode(): ?int
+    {
+        return $this->numberTemporalCode;
+    }
+
+    public function setNumberTemporalCode(?int $numberTemporalCode): static
+    {
+        $this->numberTemporalCode = $numberTemporalCode;
 
         return $this;
     }
