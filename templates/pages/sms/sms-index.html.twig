@@ -22,6 +22,14 @@
 
 
 {% block content %}
+    {% if not app.user.numberVerified %}
+        <div class="row">
+            <div class="alert alert-warning col-12">
+                {{ "token.warning"|trans }}
+                <a class="text-primary ml-2" href="{{ path('app_number_register') }}">{{ "btn.number.register"|trans }} ?</a>
+            </div>
+        </div>
+    {% endif %}
     <div class="row">
         <div class="col-12" id="accordion">
             <div class="card card-primary card-outline">
@@ -38,7 +46,7 @@
                             <div class="alert alert-success">{{ message }}</div>
                         {% endfor %}
                         <div class="my-3">
-                            <a href="{{ path('app_user_generate_token') }}" class="btn btn-primary">
+                            <a aria-disabled="true" href="{{ path('app_user_generate_token') }}" class="{{ app.user.number ?: "disabled"}} btn btn-primary">
                                 {{ "btn.generate_token"|trans }}
                             </a>
                         </div>

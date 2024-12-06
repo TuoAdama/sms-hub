@@ -12,7 +12,7 @@ use Symfony\Component\Security\Http\Attribute\CurrentUser;
 
 class HomeController extends AbstractController
 {
-    #[Route('/', name: "homes")]
+    #[Route('/', name: "home")]
     public function index(#[CurrentUser] User $user): Response
     {
         if (in_array("ROLE_ADMIN", $user->getRoles())){

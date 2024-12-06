@@ -50,6 +50,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $number = null;
+
+    #[ORM\Column]
+    private ?bool $isNumberVerified = false;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $numberToken = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?int $numberTemporalCode = null;
+
     public function __construct()
     {
         $this->smsMessages = new ArrayCollection();
@@ -192,6 +204,54 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setName(string $name): static
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getNumber(): ?string
+    {
+        return $this->number;
+    }
+
+    public function setNumber(string $number): static
+    {
+        $this->number = $number;
+
+        return $this;
+    }
+
+    public function isNumberVerified(): ?bool
+    {
+        return $this->isNumberVerified;
+    }
+
+    public function setNumberVerified(bool $isNumberVerified): static
+    {
+        $this->isNumberVerified = $isNumberVerified;
+
+        return $this;
+    }
+
+    public function getNumberToken(): ?string
+    {
+        return $this->numberToken;
+    }
+
+    public function setNumberToken(?string $numberToken): static
+    {
+        $this->numberToken = $numberToken;
+
+        return $this;
+    }
+
+    public function getNumberTemporalCode(): ?int
+    {
+        return $this->numberTemporalCode;
+    }
+
+    public function setNumberTemporalCode(?int $numberTemporalCode): static
+    {
+        $this->numberTemporalCode = $numberTemporalCode;
 
         return $this;
     }

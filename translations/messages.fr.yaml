@@ -12,6 +12,9 @@ btn:
   register: Enregistrer
   generate_token: Générer un token
   copy: copier
+  number:
+    register: Ajouter un numéro de téléphone
+  validate: Valider
 
 
 
@@ -23,3 +26,15 @@ form:
 logout: Déconnexion
 success:
   message: Opération effectuée avec succès
+number: Numéro de téléphone
+
+token:
+  warning: Pour créer un token, vous devez ajouter un token.
+
+
+verification:
+  number:
+    message: "Votre code de vérification est: "
+    invalid:
+      message: Code incorrect
+    success: Votre numéro de téléphone à bien été mis à jour !

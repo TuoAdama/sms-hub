@@ -22,4 +22,16 @@ readonly class TokenService
             $iat,
         )->generate();
     }
+
+    public function generateNumberVerificationToken(User $user): string
+    {
+        return $this->tokenGenerator->setPayload(
+            strval($user->getId()),
+            $user->getName(),
+            strtotime('+4 minutes'),
+            [
+                'type' => 'number verification',
+            ]
+        )->generate();
+    }
 }
