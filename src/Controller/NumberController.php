@@ -5,17 +5,11 @@ declare(strict_types=1);
 namespace App\Controller;
 
 use App\Entity\NumberVerification;
-use App\Entity\SmsMessage;
 use App\Entity\User;
 use App\Form\NumberFormType;
-use App\Repository\SmsMessageRepository;
-use App\Repository\UserRepository;
 use App\Service\NumberVerificationService;
-use App\Service\SmsMessageService;
 use App\Service\Token\TokenGenerator;
-use App\Service\Token\TokenService;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
 use Random\RandomException;
 use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -24,8 +18,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Contracts\Translation\TranslatorInterface;
-use function Symfony\Component\Clock\now;
 
 class NumberController extends AbstractController
 {
