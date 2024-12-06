@@ -22,7 +22,7 @@ class NumberVerification
     #[ORM\Column(nullable: true)]
     private ?int $temporalCode = null;
 
-    #[ORM\OneToOne(inversedBy: 'numberVerification', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'numberVerification', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 

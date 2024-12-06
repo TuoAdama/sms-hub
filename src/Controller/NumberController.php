@@ -10,6 +10,7 @@ use App\Entity\User;
 use App\Form\NumberFormType;
 use App\Repository\SmsMessageRepository;
 use App\Repository\UserRepository;
+use App\Service\NumberVerificationService;
 use App\Service\SmsMessageService;
 use App\Service\Token\TokenGenerator;
 use App\Service\Token\TokenService;
@@ -30,12 +31,8 @@ class NumberController extends AbstractController
 {
     public function __construct(
         private readonly EntityManagerInterface $entityManager,
-        private readonly TokenService $tokenService,
-        private readonly UserRepository $userRepository,
-        private readonly string $adminEmail,
-        private readonly SmsMessageService $smsMessageService,
         private readonly TokenGenerator $tokenGenerator,
-        private readonly TranslatorInterface $translator,
+        private readonly NumberVerificationService $numberVerificationService,
     )
     {
     }
@@ -53,7 +50,7 @@ class NumberController extends AbstractController
             $countryCode = $form->get('countryCode')->getData();
             $number = $form->get('number')->getData();
             $user->setNumber("+".$countryCode.$number);
-            $this->handleNumberVerification($user);
+            $this->numberVerificationService->handleNumberVerification($user);
             return $this->redirectToRoute('home');
         }
         return $this->render('pages/number/number_register.html.twig', [
@@ -67,7 +64,7 @@ class NumberController extends AbstractController
         #[MapEntity(mapping: ['token' => 'token'])]
         NumberVerification $numberVerification,
         #[CurrentUser] User $user,
-    )
+    ): Response
     {
         if ($numberVerification->getUser()->getId() !== $this->getUser()->getId()) {
             throw $this->createNotFoundException();
@@ -78,44 +75,9 @@ class NumberController extends AbstractController
         if ($expiredDate > time()) {
             throw $this->createNotFoundException();
         }
-
+        $this->entityManager->remove($numberVerification);
         $user->setNumberVerified(true);
         $this->entityManager->flush();
-
-
-        $this->entityManager->remove($numberVerification);
-        $this->entityManager->flush();
-
-    }
-
-
-    /**
-     * @throws RandomException
-     * @throws \Exception
-     */
-    private function handleNumberVerification(User $user): void {
-        $numberVerification = $user->getNumberVerification();
-        if ($numberVerification !== null) {
-            $this->entityManager->remove($numberVerification);
-        }
-        $verification = new NumberVerification();
-
-        $verificationCode = random_int(1000, 9999);
-
-        $verification->setUser($user)
-            ->setVerified(false)
-            ->setToken($this->tokenService->generateNumberVerificationToken($user))
-            ->setTemporalCode($verificationCode);
-
-        $smsMessage = new SmsMessage();
-        $smsMessage->setUser($this->userRepository->findAdminByEmail($this->adminEmail) ?: throw new Exception("Admin not found"))
-            ->setMessage($this->translator->trans('verification.number.message'). $verificationCode)
-            ->setRecipient($user->getNumber())
-            ->setCreatedAt(now());
-
-        $this->smsMessageService->store($smsMessage);
-
-        $this->entityManager->persist($verification);
-        $this->entityManager->flush();
+        return $this->redirectToRoute('home');
     }
 }
