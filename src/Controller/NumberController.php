@@ -101,7 +101,7 @@ class NumberController extends AbstractController
                 ->setNumberTemporalCode(null);
 
             $this->entityManager->flush();
-
+            $this->addFlash('success', $this->translator->trans("verification.number.success"));
             return $this->redirectToRoute('home');
         }
 

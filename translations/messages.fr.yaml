@@ -37,3 +37,4 @@ verification:
     message: "Votre code de vérification est: "
     invalid:
       message: Code incorrect
+    success: Votre numéro de téléphone à bien été mis à jour !
