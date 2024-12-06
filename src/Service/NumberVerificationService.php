@@ -2,7 +2,6 @@
 
 namespace App\Service;
 
-use App\Entity\NumberVerification;
 use App\Entity\SmsMessage;
 use App\Entity\User;
 use App\Repository\UserRepository;
