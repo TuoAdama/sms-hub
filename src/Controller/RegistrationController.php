@@ -73,13 +73,13 @@ class RegistrationController extends AbstractController
     #[Route('/verify/email/{id}', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request, UserRepository $userRepository): Response
     {
-        $id = $request->query->get('id');
+        $id = $request->get('id');
 
         if (null === $id) {
             return $this->redirectToRoute('app_register');
         }
 
-        $user = $userRepository->find($id);
+        $user = $userRepository->find(intval($id));
 
         if (null === $user) {
             return $this->redirectToRoute('app_register');
@@ -89,14 +89,13 @@ class RegistrationController extends AbstractController
         try {
             $this->emailVerifier->handleEmailConfirmation($request, $user);
         } catch (VerifyEmailExceptionInterface $exception) {
-            $this->addFlash('verify_email_error', $exception->getReason());
+            $this->addFlash('errors', $exception->getReason());
 
             return $this->redirectToRoute('app_register');
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
         $this->addFlash('success', 'Your email address has been verified.');
-
         return $this->redirectToRoute('app_login');
     }
 }
