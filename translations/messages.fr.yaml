@@ -42,3 +42,6 @@ user:
   credential:
     invalid: username or password is incorrect
     unverified: your e-mail or number is not verified
+code_verification: Vérification du numéro de téléphone
+register:
+  number: Enregistrement d'un numéro de téléphone
