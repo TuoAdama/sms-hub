@@ -17,14 +17,16 @@ use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
+use Symfony\Contracts\Translation\TranslatorInterface;
 
 class TokenControllerAPI extends AbstractController
 {
     public function __construct(
-        private readonly UserRepository $userRepository,
+        private readonly UserRepository              $userRepository,
         private readonly UserPasswordHasherInterface $passwordHasher,
-        private readonly EntityManagerInterface $entityManager,
-        private readonly TokenService $tokenService,
+        private readonly EntityManagerInterface      $entityManager,
+        private readonly TokenService                $tokenService,
+        private readonly TranslatorInterface $translator,
     )
     {
     }
@@ -36,8 +38,15 @@ class TokenControllerAPI extends AbstractController
             $user === null
             || !$this->passwordHasher->isPasswordValid($user, $userAuth->password)
         ) {
-            return new JsonResponse(['error' => 'username or password is incorrect'], Response::HTTP_BAD_REQUEST);
+            return new JsonResponse(['error' => $this->translator->trans('user.credential.invalid')], Response::HTTP_BAD_REQUEST);
         }
+
+        if (!$user->isNumberVerified() || !$user->isVerified()){
+            return new JsonResponse([
+                'error' => $this->translator->trans('user.credential.unverified')
+            ], Response::HTTP_BAD_REQUEST);
+        }
+
         $token = $this->tokenService->generate($user);
         $user->setAccessToken($token);
 
