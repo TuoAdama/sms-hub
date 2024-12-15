@@ -38,3 +38,7 @@ verification:
     invalid:
       message: Code incorrect
     success: Votre numéro de téléphone à bien été mis à jour !
+user:
+  credential:
+    invalid: username or password is incorrect
+    unverified: your e-mail or number is not verified
