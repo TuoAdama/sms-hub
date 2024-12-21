@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
+use Symfony\Component\Security\Http\Attribute\IsGranted;
 
 #[Route('/api/messages')]
 class SmsMessageAPI extends AbstractController
@@ -22,11 +23,22 @@ class SmsMessageAPI extends AbstractController
     {
     }
 
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    #[Route('/all/unsent', methods: ['GET'])]
+    #[IsGranted('ROLE_ADMIN')]
+    public function getAllUnsentMessages(): JsonResponse
+    {
+        return $this->json($this->smsMessageService->getAllUnsentSmsMessages());
+    }
+
     /**
      * @throws NonUniqueResultException
      */
     #[Route('/unsent', methods: ['GET'])]
-    public function getUnsentMessages(#[CurrentUser] User $user): JsonResponse
+    public function getUnsentMessagesByUser(#[CurrentUser] User $user): JsonResponse
     {
         return $this->json($this->smsMessageService->getUnSentMessageByUser($user));
     }
