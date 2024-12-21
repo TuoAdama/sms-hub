@@ -29,6 +29,15 @@ class SmsMessageService
         return $this->smsMessageRepository->getAllUnsentSmsMessages();
     }
 
+
+    public function getUnSentMessageByUser(User $user): array
+    {
+        return $this->smsMessageRepository->findBy([
+            'user' => $user,
+            'sent' => false,
+        ]);
+    }
+
     public function storeFromRequest(SmsMessageDTO $smsMessageDTO, UserInterface $user): SmsMessage
     {
         $smsMessage = new SmsMessage();

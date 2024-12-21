@@ -31,8 +31,7 @@ class ApiAuthenticator extends AbstractAuthenticator
     {
         $token = str_replace('Bearer ', '', $request->headers->get('Authorization'));
         return new SelfValidatingPassport(new UserBadge($token, function ($identifier) {
-            $user = $this->userRepository->findOneBy(['accessToken' => $identifier]);
-            return $user ?: null;
+            return $this->userRepository->findOneBy(['accessToken' => $identifier]);
         }));
     }
 
