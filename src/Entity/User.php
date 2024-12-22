@@ -62,6 +62,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(nullable: true)]
     private ?int $numberTemporalCode = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $resetPasswordToken = null;
+
     public function __construct()
     {
         $this->smsMessages = new ArrayCollection();
@@ -252,6 +255,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setNumberTemporalCode(?int $numberTemporalCode): static
     {
         $this->numberTemporalCode = $numberTemporalCode;
+
+        return $this;
+    }
+
+    public function getResetPasswordToken(): ?string
+    {
+        return $this->resetPasswordToken;
+    }
+
+    public function setResetPasswordToken(?string $resetPasswordToken): static
+    {
+        $this->resetPasswordToken = $resetPasswordToken;
 
         return $this;
     }
