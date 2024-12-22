@@ -54,3 +54,7 @@ password_forget:
   confirm: Si votre adresse e-mail existe, un mail de réinitialisation vous a sera envoyé
   email:
     subject: Modification de votre mot de passe
+  reset:
+    title: Modification de votre mot de passe
+    btn_title: Modifier votre mot de passe
+    newpassword: Nouveau mot de passe
