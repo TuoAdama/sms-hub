@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Form\SendResetPasswordFormType;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -72,11 +74,12 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/reset-password/{token}', name: 'app_reset_password_form')]
-    public function resetPasswordForm(): Response
+    public function resetPasswordForm(
+        #[MapEntity(
+            mapping: ['token' => 'resetPasswordToken']
+        )] User $user
+    ): Response
     {
-        return $this->json([
-            'message' => 'Welcome to your new controller!',
-            'path' => 'src/Controller/SecurityController.php',
-        ]);
+        return $this->render('login/password/reset_password_form.html.twig');
     }
 }
