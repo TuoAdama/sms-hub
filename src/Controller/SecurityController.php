@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Generator\UrlGenerator;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Csrf\TokenGenerator\TokenGeneratorInterface;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -55,7 +57,7 @@ class SecurityController extends AbstractController
                     ->subject($this->translator->trans('password_forget.email.subject'))
                     ->htmlTemplate('login/password/reset_password_email.html.twig')
                     ->context([
-                        'resetPasswordLink' => $this->generateUrl('app_reset_password_form', ['token' => $token], true)
+                        'resetPasswordLink' => $this->generateUrl('app_reset_password_form', ['token' => $token], UrlGeneratorInterface::ABSOLUTE_URL)
                     ]);
 
                 $this->mailer->send($mail);
