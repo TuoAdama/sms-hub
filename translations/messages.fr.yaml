@@ -58,3 +58,4 @@ password_forget:
     title: Modification de votre mot de passe
     btn_title: Modifier votre mot de passe
     newpassword: Nouveau mot de passe
+  link_title: Mot de passe oublié

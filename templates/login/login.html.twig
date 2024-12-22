@@ -38,7 +38,7 @@
             </div>
         </div>
         <div class="row">
-            <a href="{{ path('app_reset_password') }}">Mot de passe oublié</a>
+            <a class="text-danger" href="{{ path('app_reset_password') }}">{{ 'password_forget.link_title'|trans }}</a>
         </div>
     </form>
 {% endblock %}
