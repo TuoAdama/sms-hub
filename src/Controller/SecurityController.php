@@ -38,6 +38,7 @@ class SecurityController extends AbstractController
     public function resetPassword(Request $request): Response
     {
         $form = $this->createForm(SendResetPasswordFormType::class);
+        $emptyForm = clone $form;
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $this->userRepository->findOneBy(['email' => $form->get('email')->getData()]);
@@ -60,6 +61,7 @@ class SecurityController extends AbstractController
                 $this->mailer->send($mail);
             }
             $this->addFlash('success', $this->translator->trans('password_forget.confirm'));
+            $form = $emptyForm;
         }
 
         return $this->render('login/password/reset_password.html.twig', [
