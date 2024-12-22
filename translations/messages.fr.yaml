@@ -23,6 +23,8 @@ form:
     title: Création de compte
   login:
     title: Connexion
+  reset_password:
+    title: Envoyer un mail de vérification
 logout: Déconnexion
 success:
   message: Opération effectuée avec succès
@@ -45,3 +47,15 @@ user:
 code_verification: Vérification du numéro de téléphone
 register:
   number: Enregistrement d'un numéro de téléphone
+email.placeholder: Entrez votre e-mail
+
+password_forget:
+  title: Mot de passe oublié
+  confirm: Si votre adresse e-mail existe, un mail de réinitialisation vous a sera envoyé
+  email:
+    subject: Modification de votre mot de passe
+  reset:
+    title: Modification de votre mot de passe
+    btn_title: Modifier votre mot de passe
+    newpassword: Nouveau mot de passe
+  link_title: Mot de passe oublié
