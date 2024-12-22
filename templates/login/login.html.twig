@@ -34,11 +34,11 @@
                 <button type="submit" class="btn btn-primary btn-block">{{ 'form.login.title'|trans }}</button>
             </div>
             <div class="col-12 col-md-6 d-flex align-items-center">
-                <a href="{{ path('app_register') }}">Créer un compte</a>
+                <a class="btn btn-danger" href="{{ path('app_register') }}">Créer un compte</a>
             </div>
         </div>
         <div class="row">
-            <a class="text-danger" href="{{ path('app_reset_password') }}">{{ 'password_forget.link_title'|trans }}</a>
+            <a href="{{ path('app_reset_password') }}">{{ 'password_forget.link_title'|trans }}</a>
         </div>
     </form>
 {% endblock %}
