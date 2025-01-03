@@ -83,7 +83,7 @@ class SecurityController extends AbstractController
         Request $request
     ): Response
     {
-        $form = $this->createForm(ResetPasswordFormType::class, $user);
+        $form = $this->createForm(ResetPasswordFormType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $password = $form->get('password')->getData();
