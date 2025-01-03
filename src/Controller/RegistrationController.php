@@ -16,13 +16,15 @@ use Symfony\Component\Mime\Address;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Contracts\Translation\TranslatorInterface;
 use SymfonyCasts\Bundle\VerifyEmail\Exception\VerifyEmailExceptionInterface;
 
 class RegistrationController extends AbstractController
 {
     public function __construct(
-        private EmailVerifier $emailVerifier,
+        private EmailVerifier   $emailVerifier,
         private readonly string $supportEmail,
+        private readonly TranslatorInterface $translator,
     )
     {
     }
@@ -61,11 +63,8 @@ class RegistrationController extends AbstractController
             );
 
             // do anything else you need here, like send an email
-
-            return $this->render('registration/confirmation_email.html.twig', [
-                'signedUrl' => $signedUrl,
-                'expiresAtMessageKey' => $expiresAtMessageKey
-            ]);
+            $this->addFlash('warning', $this->translator->trans('register.email.messsage.login_page'));
+            return $this->redirectToRoute('app_login');
         }
 
         return $this->render('registration/register.html.twig', [
@@ -76,14 +75,12 @@ class RegistrationController extends AbstractController
     #[Route('/verify/email/{id}', name: 'app_verify_email')]
     public function verifyUserEmail(Request $request, UserRepository $userRepository): Response
     {
-        $id = $request->query->get('id');
-
+        $id = $request->get('id');
         if (null === $id) {
             return $this->redirectToRoute('app_register');
         }
 
         $user = $userRepository->find($id);
-
         if (null === $user) {
             return $this->redirectToRoute('app_register');
         }
@@ -98,7 +95,7 @@ class RegistrationController extends AbstractController
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates
-        $this->addFlash('success', 'Your email address has been verified.');
+        $this->addFlash('success', $this->translator->trans("success.register"));
 
         return $this->redirectToRoute('app_login');
     }
