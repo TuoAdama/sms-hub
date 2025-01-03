@@ -47,6 +47,11 @@ user:
 code_verification: Vérification du numéro de téléphone
 register:
   number: Enregistrement d'un numéro de téléphone
+  email:
+    messsage:
+      body: "Pour confirmer votre adresse e-email, merci de suivre le lien suivant"
+      link: "Confirmer mon adresse e-mail"
+      footer: 'Cordialement'
 email.placeholder: Entrez votre e-mail
 
 password_forget:
