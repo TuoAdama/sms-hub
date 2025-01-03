@@ -21,6 +21,7 @@ class RegistrationFormType extends AbstractType
         $builder
             ->add('email', EmailType::class, [
                 'label' => false,
+                'required' => true,
                 'row_attr' => [
                     'class' => 'd-flex w-100'
                 ],
@@ -31,6 +32,7 @@ class RegistrationFormType extends AbstractType
             ])
             ->add('name', TextType::class, [
                 'label' => false,
+                'required' => true,
                 'row_attr' => [
                     'class' => 'd-flex w-100'
                 ],

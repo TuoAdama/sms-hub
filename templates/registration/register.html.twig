@@ -5,29 +5,38 @@
 {% block content %}
 
     {{ form_start(registrationForm) }}
-            <div class="input-group mb-3 flex-nowrap">
-                {{ form_row(registrationForm.name) }}
-                <div class="input-group-append">
-                    <div class="input-group-text">
-                        <span class="fas fa-user"></span>
+            <div>
+                <div class="input-group mb-3 flex-nowrap">
+                    {{ form_widget(registrationForm.name) }}
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-user"></span>
+                        </div>
                     </div>
                 </div>
+                {{ form_errors(registrationForm.name) }}
             </div>
-            <div class="input-group mb-3 flex-nowrap">
-                {{ form_row(registrationForm.email) }}
-                <div class="input-group-append">
-                    <div class="input-group-text">
-                        <span class="fas fa-envelope"></span>
+            <div>
+                <div class="input-group mb-3 flex-nowrap">
+                    {{ form_widget(registrationForm.email) }}
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-envelope"></span>
+                        </div>
                     </div>
                 </div>
+                {{ form_errors(registrationForm.email) }}
             </div>
-            <div class="input-group mb-3 flex-nowrap">
-                {{ form_row(registrationForm.password.first) }}
-                <div class="input-group-append">
-                    <div class="input-group-text">
-                        <span class="fas fa-lock"></span>
+            <div>
+                <div class="input-group mb-3 flex-nowrap">
+                    {{ form_widget(registrationForm.password.first) }}
+                    <div class="input-group-append">
+                        <div class="input-group-text">
+                            <span class="fas fa-lock"></span>
+                        </div>
                     </div>
                 </div>
+                {{ form_errors(registrationForm.password.first) }}
             </div>
             <div class="input-group mb-3 flex-nowrap">
                 {{ form_row(registrationForm.password.second) }}
