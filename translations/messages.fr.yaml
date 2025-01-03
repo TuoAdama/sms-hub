@@ -28,6 +28,7 @@ form:
 logout: Déconnexion
 success:
   message: Opération effectuée avec succès
+  register: Your email address has been verified.
 number: Numéro de téléphone
 
 token:
@@ -52,6 +53,7 @@ register:
       body: "Pour confirmer votre adresse e-email, merci de suivre le lien suivant"
       link: "Confirmer mon adresse e-mail"
       footer: 'Cordialement'
+      login_page: Un mail de vérification vous a été envoyé pour l'activation de votre compte
 email.placeholder: Entrez votre e-mail
 
 password_forget:
