@@ -8,10 +8,12 @@
 {% block content %}
     <div class="register-box border border-secondary mx-auto">
         <div class="card card-outline card-secondary mx-auto mh-100">
-            {% for flash_error in app.flashes('verify_email_error') %}
-                <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-            {% endfor %}
             <div class="card-body">
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ label }}" role="alert">{{ message }}</div>
+                    {% endfor %}
+                {% endfor %}
                 {{ form_start(form) }}
                 <div class="input-group mb-3 flex-nowrap">
                     <div class="input-group-append">
