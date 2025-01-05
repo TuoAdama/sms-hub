@@ -4,16 +4,13 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Entity\NumberVerification;
 use App\Entity\User;
 use App\Form\CodeVerificationType;
 use App\Form\NumberFormType;
 use App\Service\NumberVerificationService;
 use App\Service\Token\TokenGenerator;
-use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Random\RandomException;
-use Symfony\Bridge\Doctrine\Attribute\MapEntity;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
