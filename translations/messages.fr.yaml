@@ -75,3 +75,6 @@ number_already_exists: Ce numéro existe déjà
 
 
 number_register_title: Mise à jour de votre numéro
+sidebar:
+  home: Accueil
+  number: Mon numéro
