@@ -107,6 +107,12 @@ class NumberController extends AbstractController
                 return $this->redirectToRoute('app_number_verify', ['token' => $token]);
             }
 
+            $numberExists = count($this->validator->validate($authUser->getNumber(), new UniqueNumber())) !== 0;
+            if ($numberExists) {
+                $this->addFlash('errors', $this->translator->trans("number_already_exists"));
+                return $this->redirectToRoute('app_number_verify', ['token' => $token]);
+            }
+
             $authUser->setNumberVerified(true)
                 ->setNumberToken(null)
                 ->setNumberTemporalCode(null);
