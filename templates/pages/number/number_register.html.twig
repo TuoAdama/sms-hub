@@ -6,8 +6,11 @@
 
 
 {% block content %}
-    <div class="register-box border border-secondary mx-auto">
+    <div class="register-box mx-auto p-3">
         <div class="card card-outline card-secondary mx-auto mh-100">
+            <div class="card-title text-center my-3 text-bold">
+                <div>{{ 'number_register_title'|trans }}</div>
+            </div>
             <div class="card-body">
                 {% for label, messages in app.flashes %}
                     {% for message in messages %}
