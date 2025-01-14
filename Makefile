@@ -1,5 +1,4 @@
 include .env.local
-export
 
 .PHONY: install
 install:
@@ -10,4 +9,5 @@ install:
 
 .PHONY: deploy
 deploy:
+	git push deploy
 	ssh -v $(SERVER_USERNAME)@$(SERVER_HOST) "cd $(SERVER_APP_ROOT) && make install"
