@@ -41,7 +41,7 @@ readonly class NumberVerificationService
             ->setNumberTemporalCode($verificationCode);
 
         $smsMessage = new SmsMessage();
-        $smsMessage->setUser($this->userRepository->findAdminByEmail($this->adminEmail) ?: throw new Exception("Admin not found"))
+        $smsMessage
             ->setMessage($this->translator->trans('verification.number.message'). $verificationCode)
             ->setRecipient($user->getNumber())
             ->setCreatedAt(now());
