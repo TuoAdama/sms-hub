@@ -27,7 +27,7 @@ class SmsMessage implements JsonSerializable
     private ?\DateTimeImmutable $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'smsMessages')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?User $user = null;
 
     public function getId(): ?int
