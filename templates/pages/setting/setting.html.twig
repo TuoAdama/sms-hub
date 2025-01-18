@@ -25,5 +25,55 @@
 
 
 {% block content %}
-
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="card card-warning mx-auto">
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-12">
+                                <!-- text input -->
+                                <div class="form-group">
+                                    <label>{{ "form.lastname"|trans }}</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label>E-mail</label>
+                                    <input type="email" class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-12 mt-2">
+                                <a href="{{ path('app_number_register') }}" class="w-100 btn btn-primary">{{ "edit"|trans }}</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="card card-warning mx-auto">
+                <!-- /.card-header -->
+                <div class="card-body">
+                    <div class="form-group">
+                        <label class="col-form-label" for="inputSuccess">{{ "number"|trans }}</label>
+                        <div class="row">
+                            <div class="col-12 col-lg-8">
+                                <input disabled type="text" class="form-control" id="inputSuccess" placeholder="Enter ...">
+                            </div>
+                            <div class="col-12 col-lg-4 mt-3 mt-lg-0">
+                                <a href="{{ path('app_number_register') }}" class="w-100 btn btn-primary">{{ "edit"|trans }}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.card-body -->
+            </div>
+        </div>
+    </div>
 {% endblock %}
