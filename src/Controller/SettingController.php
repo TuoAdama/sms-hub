@@ -41,6 +41,7 @@ class SettingController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $oldEmail = $session->get('email');
             if ($user->getEmail() !== $oldEmail) {
+                $user->setVerified(false);
                 $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user);
                 $this->addFlash('warning', $this->translator->trans("email.edit"));
             }
