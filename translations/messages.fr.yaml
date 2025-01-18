@@ -78,3 +78,10 @@ number_register_title: Mise à jour de votre numéro
 sidebar:
   home: Accueil
   number: Mon numéro
+setting:
+  label: Paramètres
+
+edit: Modifier
+
+
+email.edit: Pour la validation de votre compte, un mail de vérification vous a été envoyé
