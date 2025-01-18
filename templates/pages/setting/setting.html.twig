@@ -1,0 +1,29 @@
+{% extends "base.html.twig" %}
+
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}}
+{% endblock %}
+
+{% block title %} {{ "setting.label"|trans }} {% endblock %}
+
+
+{% block content_header %}
+    <div>
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0">{{ "setting.label"|trans }}</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="{{ path('home') }}">Accueil</a></li>
+                    <li class="breadcrumb-item active">{{ "setting.label"|trans }}</li>
+                </ol>
+            </div><!-- /.col -->
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block content %}
+
+{% endblock %}

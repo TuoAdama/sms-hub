@@ -78,3 +78,5 @@ number_register_title: Mise à jour de votre numéro
 sidebar:
   home: Accueil
   number: Mon numéro
+setting:
+  label: Paramètres
