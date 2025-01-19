@@ -45,6 +45,7 @@ class SettingController extends AbstractController
                 $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user);
                 $this->addFlash('warning', $this->translator->trans("email.edit"));
             }
+            $this->addFlash('success', $this->translator->trans("success.message"));
             $this->entityManager->flush();
         }
         return $this->render('pages/setting/setting.html.twig', [
