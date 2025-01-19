@@ -27,6 +27,11 @@
                 <div class="content-wrapper" style="min-height: 225px;">
                     <div class="content-header">
                         <div class="container-fluid">
+                            {% if not app.user.verified %}
+                                <div class="alert alert-warning">
+                                    {{ "user.unverified.message"|trans }}
+                                </div>
+                            {% endif %}
                             {% block content_header %}
 
                             {% endblock %}

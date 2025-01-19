@@ -45,6 +45,8 @@ user:
   credential:
     invalid: username or password is incorrect
     unverified: your e-mail or number is not verified
+  unverified:
+    message: Pour valider votre compte, vous devez confirmer votre adresse e-mail
 code_verification: Vérification du numéro de téléphone
 register:
   number: Enregistrement d'un numéro de téléphone
