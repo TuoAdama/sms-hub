@@ -18,22 +18,7 @@
                     {% endfor %}
                 {% endfor %}
                 {{ form_start(form) }}
-                <div class="input-group mb-3 flex-nowrap">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            <span class="fas fa-flag"></span>
-                        </div>
-                    </div>
-                    {{ form_row(form.countryCode) }}
-                </div>
-                <div class="input-group mb-3 flex-nowrap">
-                    <div class="input-group-append">
-                        <div class="input-group-text">
-                            +33
-                        </div>
-                    </div>
-                    {{ form_row(form.number) }}
-                </div>
+                {{ form_row(form.phoneNumber) }}
                 <div class="row">
                     <div class="col-12 my-3">
                         <button type="submit" class="btn btn-primary btn-block">{{ 'btn.register'|trans }}</button>
