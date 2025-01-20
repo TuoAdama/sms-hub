@@ -11,6 +11,9 @@ use App\Service\NumberVerificationService;
 use App\Service\Token\TokenGenerator;
 use App\Validator\UniqueNumber;
 use Doctrine\ORM\EntityManagerInterface;
+use libphonenumber\PhoneNumber;
+use libphonenumber\PhoneNumberFormat;
+use libphonenumber\PhoneNumberUtil;
 use Random\RandomException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -28,7 +31,8 @@ class NumberController extends AbstractController
         private readonly TokenGenerator            $tokenGenerator,
         private readonly NumberVerificationService $numberVerificationService,
         private readonly TranslatorInterface $translator,
-        private readonly ValidatorInterface $validator
+        private readonly ValidatorInterface $validator,
+        private readonly PhoneNumberUtil $phoneNumberUtil,
     )
     {
     }
@@ -44,11 +48,12 @@ class NumberController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $phoneNumber = $this->phoneNumberUtil->format(
+                $form->get('phoneNumber')->getData(),
+                PhoneNumberFormat::E164
+            );
 
-            $countryCode = $form->get('countryCode')->getData();
-            $number = "+".$countryCode.$form->get('number')->getData();
-
-            $errors = $this->validator->validate($number, new UniqueNumber());
+            $errors = $this->validator->validate($phoneNumber, new UniqueNumber());
 
             if (count($errors) > 0) {
                 $this->addFlash('danger', $this->translator->trans("number_already_exists"));
@@ -57,7 +62,7 @@ class NumberController extends AbstractController
                 ]);
             }
 
-            $user->setNumber($number);
+            $user->setNumber($phoneNumber);
             $this->numberVerificationService->handleNumberVerification($user);
 
             return $this->redirectToRoute('app_number_verify', [
