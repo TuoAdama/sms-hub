@@ -45,9 +45,7 @@
                 </a>
                 <div data-parent="#accordion" style="">
                     <div class="card-body">
-                        {% for message in app.flashes('success') %}
-                            <div class="alert alert-success">{{ message }}</div>
-                        {% endfor %}
+                        {% include 'includes/_flash_message.html.twig' %}
 
                         {% set canCreateToken = app.user.numberVerified and app.user.verified %}
 

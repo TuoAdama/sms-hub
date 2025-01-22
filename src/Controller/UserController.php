@@ -29,12 +29,13 @@ class UserController extends AbstractController
     #[Route('/token/generate', name: 'generate_token', methods: ['GET'])]
     public function generateToken(#[CurrentUser] User $user): Response
     {
+        $type = "danger"; $message = $this->translator->trans('error.message');
         if ($user->isVerified() && $user->isNumberVerified()){
+            $type = "success"; $message = $this->translator->trans('success.message');
             $user->setAccessToken($this->tokenService->generate($user));
-            $this->addFlash('success', $this->translator->trans('success.message'));
             $this->entityManager->flush();
         }
-        $this->addFlash('danger', $this->translator->trans('error.message'));
+        $this->addFlash($type, $message);
         return $this->redirectToRoute('home');
     }
 }
