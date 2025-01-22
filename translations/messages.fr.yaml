@@ -89,3 +89,5 @@ phone_number: Numéro de téléphone
 
 
 email.edit: Pour la validation de votre compte, un mail de vérification vous a été envoyé
+error:
+  message: Désolé, cette opération ne peut être effectuée

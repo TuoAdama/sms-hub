@@ -49,13 +49,15 @@
                             <div class="alert alert-success">{{ message }}</div>
                         {% endfor %}
 
+                        {% set canCreateToken = app.user.numberVerified and app.user.verified %}
+
                         <div class="my-3">
-                            <a  aria-disabled="true" href="{{ path('app_user_generate_token') }}" class="{{  app.user.numberVerified and app.user.verified ?: "disabled"}} btn btn-primary">
+                            <a  aria-disabled="true" href="{{ canCreateToken ? path('app_user_generate_token') : '#' }}" class="{{  canCreateToken ?: "disabled"}} btn btn-primary">
                                 {{ "btn.generate_token"|trans }}
                             </a>
                         </div>
 
-                        {% if app.user.accessToken and  app.user.numberVerified and app.user.verified %}
+                        {% if app.user.accessToken and  canCreateToken %}
                             <div {{ vue_component('TokenGenerator', {token: app.user.accessToken}) }}></div>
                         {% endif %}
                     </div>
