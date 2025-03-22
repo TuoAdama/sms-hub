@@ -27,7 +27,7 @@ class SmsMessageAPI extends AbstractController
     /**
      * @throws NonUniqueResultException
      */
-    #[Route('/all/unsent', methods: ['GET'])]
+    #[Route('/', methods: ['GET'])]
     #[IsGranted('ROLE_ADMIN')]
     public function getAllUnsentMessages(): JsonResponse
     {
