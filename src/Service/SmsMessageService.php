@@ -9,6 +9,7 @@ use App\Repository\SmsMessageRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Security\Core\User\UserInterface;
 
 class SmsMessageService
@@ -16,7 +17,9 @@ class SmsMessageService
 
     public function __construct(
         private readonly SmsMessageRepository $smsMessageRepository,
-        private readonly EntityManagerInterface $entityManager
+        private readonly EntityManagerInterface $entityManager,
+        #[Autowire(param: 'trial_mode')]
+        private readonly bool $trialMode,
     )
     {
     }
@@ -47,6 +50,10 @@ class SmsMessageService
             ->setMessage($smsMessageDTO->message)
             ->setRecipient($smsMessageDTO->to)
             ->setCreatedAt(new DateTimeImmutable());
+
+        if ($this->trialMode) {
+            $smsMessage->setRecipient($user->getNumber());
+        }
 
         $this->entityManager->persist($smsMessage);
         $this->entityManager->flush();
