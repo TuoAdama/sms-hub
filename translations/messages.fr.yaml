@@ -87,6 +87,9 @@ edit: Modifier
 
 phone_number: Numéro de téléphone
 
+not.sent: Non envoyé
+sent: Envoyé
+
 
 email.edit: Pour la validation de votre compte, un mail de vérification vous a été envoyé
 error:

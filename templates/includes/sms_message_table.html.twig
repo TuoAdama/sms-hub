@@ -22,7 +22,11 @@
                             <td>{{ item.id }}</td>
                             <td>{{ item.recipient }}</td>
                             <td>{{ item.message }}</td>
-                            <td>{{ item.sent }}</td>
+                            <td>
+                                <div style="border-radius: 10px;" class="{{ item.sent ? "bg-success": "bg-warning"}} text-center rounded-3">
+                                    {{ (item.sent ? "sent" :  "not.sent")|trans  }}
+                                </div>
+                            </td>
                             <td>{{ item.createdAt|date('Y-m-d H:i') }}</td>
                         </tr>
                     {% endfor %}
