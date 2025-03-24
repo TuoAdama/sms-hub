@@ -51,7 +51,8 @@ Authorization: Bearer {token}
 }
 ```
 
-**Exemples**
+Exemples
+------------
 
 Javascript:
 ```javascript
