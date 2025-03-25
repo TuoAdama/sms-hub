@@ -63,7 +63,7 @@ fetch('https://smshub.tuo-adama.com/api/messages/store', {
         'Content-Type': 'application/json'
     },
     body: JSON.stringify({ 
-        to: '0751097190',
+        to: '075109XXXX',
         message: 'Votre de vérification est: 3990'
     })
 })
@@ -92,7 +92,7 @@ public class SendMessage {
             connection.setRequestProperty("Content-Type", "application/json");
             connection.setDoOutput(true);
 
-            String jsonInputString = "{\"to\": \"0751097190\", \"message\": \"Votre de vérification est: 3990\"}";
+            String jsonInputString = "{\"to\": \"075109XXXX\", \"message\": \"Votre de vérification est: 3990\"}";
 
             try (OutputStream os = connection.getOutputStream()) {
                 byte[] input = jsonInputString.getBytes("utf-8");
@@ -129,7 +129,7 @@ $url = 'https://smshub.tuo-adama.com/api/messages/store';
 $token = '<votre_token>'; // Remplace par ton vrai token
 
 $data = [
-     'to' => '0751097190',
+     'to' => '075109XXXX',
      'message' => 'Votre de vérification est: 3990'
 ];
 

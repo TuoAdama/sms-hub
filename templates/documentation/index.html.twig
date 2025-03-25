@@ -1,0 +1,211 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Documentation{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://unpkg.com/@highlightjs/cdn-assets@11.11.1/styles/default.min.css">
+    <style>
+        pre code {
+            display: block;
+            padding: 10px;
+            background: #272822;
+            color: #f8f8f2;
+            border-radius: 5px;
+        }
+    </style>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/php.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/java.min.js"></script>
+{% endblock %}
+
+
+
+{% block content_header %}
+    <h1>Documentation</h1>
+{% endblock %}
+
+
+{% block content %}
+    <p>SMS Hub est une plateforme web qui permet d’envoyer par API des SMS à vos utilisateurs en mode test lors du développement de vos applications.
+        <br>L’utilisation de cette plateforme passe par les étapes suivantes :</p>
+
+    <h3>Création d’un jeton</h3>
+
+    <p>La création d’un jeton vous permettra de vous identifier par API lors de vos prochaines requêtes HTTP.</p>
+
+    <h3>Envoyer un SMS</h3>
+
+    <h6>URL</h6>
+    <code class="language-text">
+        https://smshub.tuo-adama.com/api/messages/store
+    </code>
+
+
+    <h6>Method: POST</h6>
+    <code class="language-plaintext">
+        https://smshub.tuo-adama.com/api/messages/store
+    </code>
+
+    <h6>Headers</h6>
+    <p>
+        <code class="language-plaintext">
+            Authorization: Bearer {token}
+        </code>
+    </p>
+
+
+    <div>
+        <h6>Réponses</h6>
+        <div>
+            <div>201: Created</div>
+            <pre>
+                <code class="language-javascript">
+{
+    "id": 14,
+    "recipient": "votre numéro",
+    "message": "Votre de vérification est: 3990"
+}
+                </code>
+            </pre>
+        </div>
+        <div>
+            <div>401: Unauthorized</div>
+            <pre>
+                <code class="language-javascript">
+{
+    "message": "Bad credentials."
+}
+                </code>
+            </pre>
+        </div>
+    </div>
+
+    <div>
+        <h6>Exemples</h6>
+        <div>
+            <div>Javascript</div>
+            <pre>
+                <code class="language-javascript">
+fetch('https://smshub.tuo-adama.com/api/messages/store', {
+    method: 'POST',
+    headers: {
+        'Authorization': 'Bearer votre_token',
+        'Content-Type': 'application/json'
+    },
+    body: JSON.stringify({
+        to: '075109XXXX',
+        message: 'Votre de vérification est: 3990'
+    })
+})
+
+.then(response => response.json())
+
+.then(data => console.log(data))
+
+.catch(error => console.error('Erreur:', error));
+                </code>
+            </pre>
+        </div>
+
+
+
+        <div>
+            <div>Java</div>
+            <pre>
+                <code class="language-java">
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
+public class SendMessage {
+    public static void main(String[] args) {
+        try {
+            URL url = new URL("https://smshub.tuo-adama.com/api/messages/store");
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setRequestProperty("Authorization", "Bearer votre_token");
+            connection.setRequestProperty("Content-Type", "application/json");
+            connection.setDoOutput(true);
+
+            String jsonInputString = "{\"to\": \"075109XXXX\", \"message\": \"Votre de vérification est: 3990\"}";
+
+            try (OutputStream os = connection.getOutputStream()) {
+                byte[] input = jsonInputString.getBytes("utf-8");
+                os.write(input, 0, input.length);
+            }
+
+            int code = connection.getResponseCode();
+            System.out.println("Response Code: " + code);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+                </code>
+            </pre>
+        </div>
+
+
+
+
+        <div>
+            <div>PHP</div>
+            <pre>
+                <code class="language-php">
+&lt;?php
+
+require 'vendor/autoload.php';
+
+
+use GuzzleHttp\Client;
+
+use GuzzleHttp\Exception\RequestException;
+
+
+$client = new Client();
+
+$url = 'https://smshub.tuo-adama.com/api/messages/store';
+
+$token = 'votre_token';
+
+$data = [
+     'to' => '075109XXXX',
+     'message' => 'Votre de vérification est: 3990'
+];
+
+
+try {
+     $response = $client->post($url, [
+        'headers' => [
+            'Authorization' => 'Bearer ' . $token,
+            'Content-Type' => 'application/json'
+        ],
+         'json' => $data
+    ]);
+
+    $body = $response->getBody();
+
+    echo "API response : ";
+
+    print_r(json_decode($body, true));
+
+} catch (RequestException $e) {
+
+    echo "Erreur : " . $e->getMessage();
+
+}
+
+?&gt;
+                </code>
+            </pre>
+        </div>
+
+    </div>
+
+
+{% endblock %}
+
