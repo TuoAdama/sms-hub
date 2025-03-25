@@ -18,6 +18,6 @@ class HomeController extends AbstractController
         if (in_array("ROLE_ADMIN", $user->getRoles())){
             return $this->redirectToRoute('app_admin_sms_index');
         }
-        return $this->redirectToRoute('sms_index');
+        return $this->redirectToRoute('app_documentation');
     }
 }
