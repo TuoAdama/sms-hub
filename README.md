@@ -17,7 +17,7 @@ Envoyer un SMS
 **URL**:
 
 ```text
-https://smshub.tuo-adama.com/api/messages/store
+https://smshub.tuo-adama.com/api/messages
 ```
 
 Method: **POST**
@@ -27,6 +27,7 @@ Method: **POST**
 
 ```text
 Authorization: Bearer {token}
+Accept: application/json
 ```
 
 ### Réponses
@@ -56,7 +57,7 @@ Exemples
 
 Javascript:
 ```javascript
-fetch('https://smshub.tuo-adama.com/api/messages/store', {
+fetch('https://smshub.tuo-adama.com/api/messages', {
     method: 'POST',
     headers: {
         'Authorization': 'Bearer <votre_token>',
@@ -85,7 +86,7 @@ import java.net.URL;
 public class SendMessage {
     public static void main(String[] args) {
         try {
-            URL url = new URL("https://smshub.tuo-adama.com/api/messages/store");
+            URL url = new URL("https://smshub.tuo-adama.com/api/messages");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Authorization", "Bearer <votre_token>");
@@ -124,7 +125,7 @@ use GuzzleHttp\Exception\RequestException;
   
 $client = new Client();
 
-$url = 'https://smshub.tuo-adama.com/api/messages/store';
+$url = 'https://smshub.tuo-adama.com/api/messages';
 
 $token = '<votre_token>'; // Remplace par ton vrai token
 

@@ -2,13 +2,14 @@
 
 namespace App\DTO\Request;
 
+use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber;
 use Symfony\Component\Validator\Constraints as Assert;
 
 class SmsMessageDTO
 {
     #[Assert\NotBlank]
     #[Assert\NotNull]
-    #[Assert\Regex(pattern: "/^0[1-9]{1}[0-9]{8}$/")]
+    #[PhoneNumber]
     public string $to;
 
     #[Assert\NotBlank]

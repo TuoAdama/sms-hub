@@ -41,19 +41,24 @@
 
     <h6 class="mt-4">URL</h6>
     <code class="language-text">
-        https://smshub.tuo-adama.com/api/messages/store
+        https://smshub.tuo-adama.com/api/messages
     </code>
 
 
     <h6 class="mt-4">Method: POST</h6>
     <code class="language-plaintext">
-        https://smshub.tuo-adama.com/api/messages/store
+        https://smshub.tuo-adama.com/api/messages
     </code>
 
     <h6 class="mt-4">Headers</h6>
     <p>
         <code class="language-plaintext">
             Authorization: Bearer {token}
+        </code>
+    </p>
+    <p>
+        <code class="language-plaintext">
+            Accept: application/json
         </code>
     </p>
 
@@ -92,7 +97,7 @@
             <div class="text-bold text-primary">Javascript</div>
             <pre>
                 <code class="language-javascript">
-fetch('https://smshub.tuo-adama.com/api/messages/store', {
+fetch('https://smshub.tuo-adama.com/api/messages', {
     method: 'POST',
     headers: {
         'Authorization': 'Bearer votre_token',
@@ -126,7 +131,7 @@ import java.net.URL;
 public class SendMessage {
     public static void main(String[] args) {
         try {
-            URL url = new URL("https://smshub.tuo-adama.com/api/messages/store");
+            URL url = new URL("https://smshub.tuo-adama.com/api/messages");
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setRequestMethod("POST");
             connection.setRequestProperty("Authorization", "Bearer votre_token");
@@ -170,7 +175,7 @@ use GuzzleHttp\Exception\RequestException;
 
 $client = new Client();
 
-$url = 'https://smshub.tuo-adama.com/api/messages/store';
+$url = 'https://smshub.tuo-adama.com/api/messages';
 
 $token = 'votre_token';
 

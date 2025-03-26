@@ -14,8 +14,7 @@ use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
 
-#[Route('/api/messages')]
-class SmsMessageAPI extends AbstractController
+class SmsMessageControllerAPI extends AbstractController
 {
     public function __construct(
         private readonly SmsMessageService $smsMessageService
@@ -27,26 +26,26 @@ class SmsMessageAPI extends AbstractController
     /**
      * @throws NonUniqueResultException
      */
-    #[Route('/', methods: ['GET'])]
+    #[Route('/api/messages', methods: ['GET'])]
     #[IsGranted('ROLE_ADMIN')]
     public function getAllUnsentMessages(): JsonResponse
     {
         return $this->json($this->smsMessageService->getAllUnsentSmsMessages());
     }
 
-    /**
-     * @throws NonUniqueResultException
-     */
-    #[Route('/unsent', methods: ['GET'])]
-    public function getUnsentMessagesByUser(#[CurrentUser] User $user): JsonResponse
-    {
-        return $this->json($this->smsMessageService->getUnSentMessageByUser($user));
-    }
-
-    #[Route('/store', methods: ['POST'])]
+    #[Route('/api/messages', methods: ['POST'])]
     public function store(#[MapRequestPayload] SmsMessageDTO $message): Response
     {
         $smsMessage = $this->smsMessageService->storeFromRequest($message, $this->getUser());
         return $this->json($smsMessage, Response::HTTP_CREATED);
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    #[Route('/api/messages/unsent', methods: ['GET'])]
+    public function getUnsentMessagesByUser(#[CurrentUser] User $user): JsonResponse
+    {
+        return $this->json($this->smsMessageService->getUnSentMessageByUser($user));
     }
 }
