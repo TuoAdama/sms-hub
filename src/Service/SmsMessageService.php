@@ -9,8 +9,6 @@ use App\Repository\SmsMessageRepository;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
-use libphonenumber\NumberParseException;
-use libphonenumber\PhoneNumberUtil;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\Security\Core\User\UserInterface;
 
@@ -22,7 +20,6 @@ readonly class SmsMessageService
         private EntityManagerInterface $entityManager,
         #[Autowire(param: 'trial_mode')]
         private bool                   $trialMode,
-        private NumberService          $numberService,
     )
     {
     }
@@ -44,21 +41,16 @@ readonly class SmsMessageService
         ]);
     }
 
-    /**
-     * @throws NumberParseException
-     */
     public function storeFromRequest(SmsMessageDTO $smsMessageDTO, UserInterface $user): SmsMessage
     {
-        $phoneNumber = $this->numberService->formatNumber(
-            PhoneNumberUtil::getInstance()->parse($smsMessageDTO->to)
-        );
+
 
         $smsMessage = new SmsMessage();
 
         /** @var User $user */
         $smsMessage->setUser($user)
             ->setMessage($smsMessageDTO->message)
-            ->setRecipient($phoneNumber)
+            ->setRecipient($smsMessageDTO->to)
             ->setCreatedAt(new DateTimeImmutable());
 
         if ($this->trialMode) {

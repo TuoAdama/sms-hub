@@ -10,11 +10,14 @@ use libphonenumber\PhoneNumber;
 use libphonenumber\PhoneNumberFormat;
 use libphonenumber\PhoneNumberUtil;
 use Random\RandomException;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use function Symfony\Component\Clock\now;
 
 readonly class NumberService
 {
+
+    private array $countriesCodesAccepted;
 
     public function __construct(
         private EntityManagerInterface $entityManager,
@@ -22,8 +25,11 @@ readonly class NumberService
         private string                 $adminEmail,
         private TranslatorInterface    $translator,
         private PhoneNumberUtil        $phoneNumberUtil,
+        #[Autowire(param: "countries_codes")]
+        private readonly array $countriesCodes
     )
     {
+        $this->countriesCodesAccepted = $this->countriesCodes['accepted'] ?? [];
     }
 
 
@@ -58,5 +64,10 @@ readonly class NumberService
             $number,
             PhoneNumberFormat::E164
         );
+    }
+
+    public function isNumberAccepted(PhoneNumber $phoneNumber): bool
+    {
+        return in_array($phoneNumber->getCountryCode(), $this->countriesCodesAccepted);
     }
 }

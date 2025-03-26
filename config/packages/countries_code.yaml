@@ -1,0 +1,4 @@
+parameters:
+  countries_codes:
+    accepted:
+      - 33
