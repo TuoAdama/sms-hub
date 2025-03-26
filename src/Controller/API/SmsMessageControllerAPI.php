@@ -51,7 +51,7 @@ class SmsMessageControllerAPI extends AbstractController
         if (!$isAcceptedNumber) {
             return $this->json([
                 "message" => $this->translator->trans("country_code_not_accepted"),
-            ], Response::HTTP_BAD_REQUEST);
+            ], Response::HTTP_UNSUPPORTED_MEDIA_TYPE);
         }
 
         $message->to = $this->numberService->formatNumber(
