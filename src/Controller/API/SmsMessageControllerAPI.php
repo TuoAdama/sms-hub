@@ -59,7 +59,11 @@ class SmsMessageControllerAPI extends AbstractController
         );
         $smsMessage = $this->smsMessageService->storeFromRequest($message, $this->getUser());
 
-        return $this->json($smsMessage, Response::HTTP_CREATED);
+        return $this->json([
+            "id" => $smsMessage->getId(),
+            "to" => $smsMessage->getRecipient(),
+            "message" => $smsMessage->getMessage(),
+        ], Response::HTTP_CREATED);
     }
 
     /**
