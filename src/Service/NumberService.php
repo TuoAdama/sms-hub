@@ -4,24 +4,24 @@ namespace App\Service;
 
 use App\Entity\SmsMessage;
 use App\Entity\User;
-use App\Repository\UserRepository;
 use App\Service\Token\TokenService;
 use Doctrine\ORM\EntityManagerInterface;
-use Exception;
+use libphonenumber\PhoneNumber;
+use libphonenumber\PhoneNumberFormat;
+use libphonenumber\PhoneNumberUtil;
 use Random\RandomException;
 use Symfony\Contracts\Translation\TranslatorInterface;
 use function Symfony\Component\Clock\now;
 
-readonly class NumberVerificationService
+readonly class NumberService
 {
 
     public function __construct(
         private EntityManagerInterface $entityManager,
         private TokenService                    $tokenService,
-        private UserRepository         $userRepository,
         private string                 $adminEmail,
-        private SmsMessageService      $smsMessageService,
         private TranslatorInterface    $translator,
+        private PhoneNumberUtil        $phoneNumberUtil,
     )
     {
     }
@@ -46,8 +46,17 @@ readonly class NumberVerificationService
             ->setRecipient($user->getNumber())
             ->setCreatedAt(now());
 
-        $this->smsMessageService->store($smsMessage);
+        $this->entityManager->persist($smsMessage);
 
         $this->entityManager->flush();
+    }
+
+
+    public function formatNumber(PhoneNumber $number): string
+    {
+        return $this->phoneNumberUtil->format(
+            $number,
+            PhoneNumberFormat::E164
+        );
     }
 }

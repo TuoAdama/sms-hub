@@ -7,7 +7,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\CodeVerificationType;
 use App\Form\NumberFormType;
-use App\Service\NumberVerificationService;
+use App\Service\NumberService;
 use App\Service\Token\TokenGenerator;
 use App\Validator\UniqueNumber;
 use Doctrine\ORM\EntityManagerInterface;
@@ -27,12 +27,11 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class NumberController extends AbstractController
 {
     public function __construct(
-        private readonly EntityManagerInterface    $entityManager,
-        private readonly TokenGenerator            $tokenGenerator,
-        private readonly NumberVerificationService $numberVerificationService,
-        private readonly TranslatorInterface $translator,
-        private readonly ValidatorInterface $validator,
-        private readonly PhoneNumberUtil $phoneNumberUtil,
+        private readonly EntityManagerInterface $entityManager,
+        private readonly TokenGenerator         $tokenGenerator,
+        private readonly NumberService          $numberService,
+        private readonly TranslatorInterface    $translator,
+        private readonly ValidatorInterface     $validator,
     )
     {
     }
@@ -48,10 +47,7 @@ class NumberController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $phoneNumber = $this->phoneNumberUtil->format(
-                $form->get('phoneNumber')->getData(),
-                PhoneNumberFormat::E164
-            );
+            $phoneNumber = $this->numberService->formatNumber($form->get('phoneNumber')->getData());
 
             $errors = $this->validator->validate($phoneNumber, new UniqueNumber());
 
@@ -63,7 +59,7 @@ class NumberController extends AbstractController
             }
 
             $user->setNumber($phoneNumber);
-            $this->numberVerificationService->handleNumberVerification($user);
+            $this->numberService->handleNumberVerification($user);
 
             return $this->redirectToRoute('app_number_verify', [
                 'token' => $user->getNumberToken(),
