@@ -96,3 +96,5 @@ error:
   message: Désolé, cette opération ne peut être effectuée
 Documentation: Documentation
 country_code_not_accepted: L'indicatif précisé n'est pas supporté
+invalid:
+  country_code: Vous devez definir un indicatif

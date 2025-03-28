@@ -16,13 +16,12 @@ use Symfony\Component\HttpKernel\Attribute\MapRequestPayload;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Security\Http\Attribute\CurrentUser;
 use Symfony\Component\Security\Http\Attribute\IsGranted;
-use Symfony\Contracts\Translation\TranslatorInterface;
 
 class SmsMessageControllerAPI extends AbstractController
 {
     public function __construct(
         private readonly SmsMessageService $smsMessageService,
-        private readonly NumberService     $numberService, private readonly TranslatorInterface $translator,
+        private readonly NumberService     $numberService,
     )
     {
     }
@@ -46,17 +45,10 @@ class SmsMessageControllerAPI extends AbstractController
     {
         $phoneNumber = PhoneNumberUtil::getInstance()->parse($message->to);
 
-        $isAcceptedNumber = $this->numberService->isNumberAccepted($phoneNumber);
-
-        if (!$isAcceptedNumber) {
-            return $this->json([
-                "message" => $this->translator->trans("country_code_not_accepted"),
-            ], Response::HTTP_UNSUPPORTED_MEDIA_TYPE);
-        }
-
         $message->to = $this->numberService->formatNumber(
             $phoneNumber,
         );
+
         $smsMessage = $this->smsMessageService->storeFromRequest($message, $this->getUser());
 
         return $this->json([

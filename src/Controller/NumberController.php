@@ -4,12 +4,12 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use App\Constraint\UniqueNumber;
 use App\Entity\User;
 use App\Form\CodeVerificationType;
 use App\Form\NumberFormType;
 use App\Service\NumberService;
 use App\Service\Token\TokenGenerator;
+use App\Validator\UniqueNumber;
 use Doctrine\ORM\EntityManagerInterface;
 use Random\RandomException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Validator\OnlyAcceptedCountries;
 use Misd\PhoneNumberBundle\Form\Type\PhoneNumberType;
 use Misd\PhoneNumberBundle\Validator\Constraints\PhoneNumber;
 use Symfony\Component\Form\AbstractType;
@@ -29,6 +30,7 @@ class NumberFormType extends AbstractType
                 ],
                 'constraints' => [
                     new PhoneNumber(),
+                    new OnlyAcceptedCountries()
                 ]
             ]);
         ;

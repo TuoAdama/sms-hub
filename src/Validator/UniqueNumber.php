@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Constraint;
+namespace App\Validator;
 
 use Symfony\Component\Validator\Attribute\HasNamedArguments;
 use Symfony\Component\Validator\Constraint;
